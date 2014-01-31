@@ -1,0 +1,13 @@
+<template name="matchInSearch">
+<tr>
+	<td><a href="/teams/{{team.name}}/"><img height="40px" src="{{team.image}}"></a></td>
+	<td><a href="/teams/{{team.name}}/">{{team.name}}</a></td>
+	<td>{{type}}</td>
+	<td>{{map}}</td>
+	<td>
+		<a href="/matches/{{_id}}" class="btn btn-default">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+	</td>
+</tr>
+</template>

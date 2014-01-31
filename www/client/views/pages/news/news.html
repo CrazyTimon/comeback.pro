@@ -1,0 +1,19 @@
+<template name="news">
+	<div class="container">
+		<div class="page-header">
+			<h1>Новости проекта</h1>
+		</div>
+		<div class="row">
+			<section class="col-md-9 col-lg-8">
+				{{#each news}}
+
+				{{else}}
+					<h1 class="text-muted">Нет новостей</h1>
+				{{/each}}
+			</section>
+			<aside class="col-md-3 col-lg-4">
+				{{> chat}}
+			</aside>
+		</div>
+	</div>
+</template>

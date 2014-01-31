@@ -1,0 +1,51 @@
+<template name="match">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class='row'>
+					<div class="page-header">
+						<h1>
+							{{team.name}}{{#if team2}} vs {{team2.name}}{{/if}}
+							<small class="pull-right">
+								<span class="label label-default text-muted">{{type}}</span>
+								|
+								<span class="label label-default">{{map}}</span>
+								|
+								<span class="label label-default">{{server}}</span>
+							</small>
+						</h1>
+					</div>
+				</div>
+				<div class="row well">
+					<div class='col-md-4'>
+						<div class="center">
+							<img src="{{team.image}}" height="150px">
+						</div>
+					</div>
+					<div class='col-md-4 center'>
+						<img src="/img/vs.png">	
+						<div class='btn-group-vertical'>
+							{{#if $eq myMatchId _id}}
+								<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
+							{{else}}
+								{{#if $neq team1 user.team}}<button class="btn btn-success goCW" data-id="{{_id}}">Сыграть CW</button>{{/if}}
+							{{/if}}
+						</div>
+					</div>
+					<div class='col-md-4'>
+						<div class="center">
+							{{#if team2}}
+								<img src="{{team2.image}}" height="150px">
+							{{else}}
+								{{#if $neq myMatchId _id}}<a href="#" class="goCW" data-id="{{_id}}">{{/if}}<img src="/img/plus.png" height="150px">{{#if $neq myMatchId _id}}</a>{{/if}}
+							{{/if}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				{{> chat}}
+			</div>
+		</div>
+	</div>
+</template>

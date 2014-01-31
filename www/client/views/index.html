@@ -1,0 +1,18 @@
+<head>
+	<title>ComeBack.pro</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" sizes="16x16 32x32 64x64 128x128 256x256" href="/favicon.ico?v=5">
+	<link rel="stylesheet" href="/css/lib/bootstrap.css">
+	<link rel="stylesheet" href="/css/lib/footer.css">
+	<link rel="stylesheet" href="/css/main.css">
+</head>
+<template name="layout">
+	<body>
+		<div id="wrap">
+			{{> nav}}
+			{{yield}}
+		</div>
+		{{> footer}}
+	</body>
+</template>

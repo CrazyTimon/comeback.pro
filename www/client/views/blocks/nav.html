@@ -1,0 +1,70 @@
+<template name="nav">
+	<nav class="navbar navbar-default navbar-static-top" id="navbar" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img height="18" src="/img/nav/comeback.png"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="{{active '/'}}">
+              <a href="{{pathFor 'index'}}">
+                <span class="glyphicon glyphicon-home"></span> 
+                 Главная
+              </a>
+            </li>
+            <li class="{{active '/news'}}">
+              <a href="{{pathFor 'news'}}">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                 Новости
+              </a>
+            </li>
+              {{#if currentUser}}
+                {{#if user.profile.steamID}}
+                <li class="{{active '/teams'}}">
+                  <a href="{{pathFor 'teams'}}">
+                    <span class="glyphicon glyphicon-star"></span> 
+                     Команды 
+                  </a>
+                </li>
+                <li class="{{active '/users'}}">
+                  <a href="{{pathFor 'users'}}">
+                    <span class="glyphicon glyphicon-user"></span> 
+                    Игроки
+                    {{#if userOnlineCount}}
+                      <span class="badge">{{userOnlineCount}}</span>
+                    {{/if}}
+                  </a>
+                </li>
+                {{/if}}
+              {{/if}}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="aboutMenu" onclick="return false;">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                 О проекте
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="aboutMenu">
+                <li role="presentation" class="dropdown-header">Общая информация</li>
+                <li><a href="{{pathFor 'about'}}">О проекте</a></li>
+                <li><a href="{{pathFor 'contacts'}}">Контакты</a></li>
+                <li><a href="http://comeback.reformal.ru/">Предложения</a></li>
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header">Группы</li>
+                <li><a href="http://vk.com/comeback_pro">ВКонтакте</a></li>
+                <li><a href="http://steamcommunity.com/groups/comeback_pro">Steam</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {{ loginButtons }}
+          </ul>
+        </div>
+      </div>
+    </nav>
+</template>

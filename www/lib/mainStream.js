@@ -1,0 +1,1 @@
+mainStream = new Meteor.Stream('mainStream');
