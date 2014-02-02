@@ -1,0 +1,12 @@
+{
+  "packages": {
+    "npm": {},
+    "iron-router": {},
+    "bootstrap-3": {},
+    "auto-nprogress": {},
+    "accounts-steam": {},
+    "fast-render": {},
+    "streams": {},
+    "handlebar-helpers": {}
+  }
+}

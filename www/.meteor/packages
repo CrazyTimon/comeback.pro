@@ -4,6 +4,15 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
-insecure
 preserve-inputs
+npm
+iron-router
+bootstrap-3
+jquery
+auto-nprogress
+accounts-base
+accounts-password
+accounts-steam
+fast-render
+streams
+handlebar-helpers
