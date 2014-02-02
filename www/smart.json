@@ -7,6 +7,8 @@
     "accounts-steam": {},
     "fast-render": {},
     "streams": {},
-    "handlebar-helpers": {}
+    "handlebar-helpers": {},
+    "bootstrap-slate": {},
+    "accounts-ui-bootstrap-3": {}
   }
 }

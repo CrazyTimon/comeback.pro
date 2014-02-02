@@ -171,14 +171,6 @@ Router.map(function() {
 				}
 				
 			}
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('news', {
@@ -193,39 +185,15 @@ Router.map(function() {
 					return News.find({sort: {date: -1}});
 				}
 			}
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('about', {
 		path: '/about',
-		template: 'about',
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
-		}
+		template: 'about'
 	});
 	this.route('contacts', {
 		path: '/contacts',
-		template: 'contacts',
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
-		}
+		template: 'contacts'
 	});
 	this.route('users', {
 		path: '/users',
@@ -243,14 +211,6 @@ Router.map(function() {
 					return Meteor.users.find();
 				}
 			}
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('user', {
@@ -265,14 +225,6 @@ Router.map(function() {
 		},
 		data: function() {
 			return Meteor.users.findOne({username: this.params.username});
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('teams', {
@@ -291,14 +243,6 @@ Router.map(function() {
 					return Teams.find();
 				}
 			}
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('team', {
@@ -314,14 +258,6 @@ Router.map(function() {
 		data: function() {
 			Session.set("currentShowTeam", this.params.name);
 			return Teams.findOne({name: this.params.name});
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('matches',{
@@ -336,14 +272,6 @@ Router.map(function() {
 		},
 		data: function() {
 			return Matches.findOne({_id: this.params.id});
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('profile', {
@@ -358,38 +286,14 @@ Router.map(function() {
 		},
 		data: function() {
 			return Meteor.user();
-		},
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
 		}
 	});
 	this.route('contacts', {
 		path: '/contacts',
-		template: 'contacts',
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
-		}
+		template: 'contacts'
 	});
 	this.route('notFound', { 
 		path: '*',
-		template: 'notFound',
-		before: function() {
-			if (this.ready()) {
-				NProgress.done(); 
-			} else {
-				NProgress.start();
-				this.stop();
-			}
-		}
+		template: 'notFound'
 	});
 });
