@@ -1,0 +1,1 @@
+screen -AdmS comeback.pro mrt --production
