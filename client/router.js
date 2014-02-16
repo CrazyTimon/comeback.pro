@@ -130,11 +130,6 @@ Handlebars.registerHelper('matchId', function(username) {
 	}
 });
 
-
-Handlebars.registerHelper('user', function() {
-	return Meteor.user();
-});
-
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
