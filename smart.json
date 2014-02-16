@@ -10,6 +10,7 @@
     "bootstrap-slate": {},
     "rcon": {},
     "steam": {},
-    "accounts-steam": {}
+    "accounts-steam": {},
+    "accounts-ui-bootstrap-3": {}
   }
 }
