@@ -1,1 +1,1 @@
-screen -AdmS comeback.pro mrt --production --port 80
+screen -AdmS comeback.pro sudo mrt --production --port 80
