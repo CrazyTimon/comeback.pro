@@ -143,7 +143,6 @@ Router.map(function() {
 		waitOn: function() {
 			return [
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('users'),
 				Meteor.subscribe('matches')
 			]
 		},
@@ -195,7 +194,6 @@ Router.map(function() {
 		template: 'users',
 		waitOn: function() {
 			return [
-				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
@@ -213,7 +211,6 @@ Router.map(function() {
 		template: 'user',
 		waitOn: function() {
 			return [
-				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
@@ -227,7 +224,6 @@ Router.map(function() {
 		template: 'teams',
 		waitOn: function() {
 			return [
-				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
@@ -245,7 +241,6 @@ Router.map(function() {
 		template: 'team',
 		waitOn: function() {
 			return [
-				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
@@ -261,26 +256,11 @@ Router.map(function() {
 		waitOn: function() {
 			return [
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('users'),
 				Meteor.subscribe('matches')
 			]
 		},
 		data: function() {
 			return Matches.findOne({_id: this.params.id});
-		}
-	});
-	this.route('profile', {
-		path: '/profile',
-		template: 'profile',
-		waitOn: function() {
-			return [
-				Meteor.subscribe('users'),
-				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
-			]
-		},
-		data: function() {
-			return Meteor.user();
 		}
 	});
 	this.route('contacts', {
