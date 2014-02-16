@@ -1,0 +1,37 @@
+#navbar {
+	margin-bottom: 0px;
+}
+
+.center {
+	text-align: center;
+}
+
+#nprogress, #nprogress .bar, #nprogress .spinner {
+	z-index: 2000;
+}
+
+#metrika {
+	margin-top: 1.4%; 
+	opacity: .45;
+}
+
+#metrika:hover {
+	opacity: 1;
+}
+
+#chat {
+	height: 400px;
+	min-height: 400px;
+	max-height: 400px;
+	overflow-x: hidden;
+	word-wrap: break-word;
+}
+
+*:focus {
+    outline: 0;
+}
+
+td, th {
+ text-align:center;
+ vertical-align:middle;
+}
