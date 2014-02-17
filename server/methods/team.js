@@ -5,15 +5,15 @@ Meteor.methods({
 				throw new Meteor.Error(403, "Команда " + teamName + " уже существует.");
 			} else {
 				if (!Meteor.users.findOne({_id: this.userId}).profile.team) {
-					var username = Meteor.users.findOne({_id: this.userId}).username;
+					var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 					if (!Teams.findOne({captain: username})) {
-							var username = Meteor.users.findOne({_id: this.userId}).username;
+							var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 							var teamId = Teams.insert({
-							name: teamName,
-							captain: username,
-							dateCreate: Date.now(), 
-							image: "/img/teams/default.png"
-						});
+								name: teamName,
+								captain: username,
+								dateCreate: Date.now(), 
+								image: "/img/teams/default.png"
+							});
 						Teams.update({_id: teamId}, {
 							$addToSet: {
 								members: {
@@ -38,7 +38,7 @@ Meteor.methods({
 
 	'joinToTeam': function(teamName) {
 		if (teamName) {
-			var username = Meteor.users.findOne(this.userId).username;
+			var username = Meteor.users.findOne(this.userId).profile.name;
 			if (!Teams.findOne({"members.username": username})) {
 				var teamId = Teams.findOne({name: teamName})._id;
 				var captain = Teams.findOne({name: teamName}).captain;
@@ -68,11 +68,11 @@ Meteor.methods({
 	'acceptFromTeam': function(username) {
 		if (username) {
 			var captain = Meteor.users.findOne({_id: this.userId});
-			if (Teams.findOne({captain: captain.username})) {
-				if (Teams.findOne({captain: captain.username, "members.username": username})) {
-					if (Teams.findOne({captain: captain.username, "members.username": username, "members.accepted": false})) {
-						var teamId = Teams.findOne({captain: captain.username})._id;
-						var teamName = Teams.findOne({captain: captain.username}).name;
+			if (Teams.findOne({captain: captain.profile.name})) {
+				if (Teams.findOne({captain: captain.profile.name, "members.username": username})) {
+					if (Teams.findOne({captain: captain.profile.name, "members.username": username, "members.accepted": false})) {
+						var teamId = Teams.findOne({captain: captain.profile.name})._id;
+						var teamName = Teams.findOne({captain: captain.profile.name}).name;
 						Teams.update({
 							_id: teamId, 
 							"members.username": username
@@ -100,11 +100,11 @@ Meteor.methods({
 	'declineFromTeam': function(username) {
 		if (username) {
 			var captain = Meteor.users.findOne({_id: this.userId});
-			if (Teams.findOne({captain: captain.username})) {
-				if (Teams.findOne({captain: captain.username, "members.username": username})) {
-					if (Teams.findOne({captain: captain.username, "members.username": username, "members.accepted": false})) {
-						var teamId = Teams.findOne({captain: captain.username})._id;
-						var teamName = Teams.findOne({captain: captain.username}).name;
+			if (Teams.findOne({captain: captain.profile.name})) {
+				if (Teams.findOne({captain: captain.profile.name, "members.username": username})) {
+					if (Teams.findOne({captain: captain.profile.name, "members.username": username, "members.accepted": false})) {
+						var teamId = Teams.findOne({captain: captain.profile.name})._id;
+						var teamName = Teams.findOne({captain: captain.profile.name}).name;
 						Teams.update({_id: teamId}, {
 							$pull: {
 								members: {
@@ -129,9 +129,9 @@ Meteor.methods({
 	'kickFromTeam': function(username) {
 		if (username) {
 			var captain = Meteor.users.findOne({_id: this.userId});
-			var teamName = Teams.findOne({captain: captain.username}).name;
-			if (Teams.findOne({captain: captain.username})) {
-				if (Teams.findOne({captain: captain.username, "members.username": username})) {
+			var teamName = Teams.findOne({captain: captain.profile.name}).name;
+			if (Teams.findOne({captain: captain.profile.name})) {
+				if (Teams.findOne({captain: captain.profile.name, "members.username": username})) {
 					if (!(Teams.findOne({name: teamName}).captain === username) || Teams.findOne({name: teamName}).members.length === 1) {
 						if ( !(Matches.findOne({'team.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
 							if (Teams.findOne({name: teamName}).members.length === 1) {
@@ -164,7 +164,7 @@ Meteor.methods({
 	},
 	'leaveFromTeam': function(teamName) {
 		if (teamName) {
-			var username = Meteor.users.findOne({_id: this.userId}).username;
+			var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 			if (Teams.findOne({"members.username": username})) {
 				if (!(Teams.findOne({name: teamName}).captain === username) || Teams.findOne({name: teamName}).members.length === 1) {
 					if ( !(Matches.findOne({'team.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
@@ -197,8 +197,8 @@ Meteor.methods({
 	'makeCaptain': function(username) {
 		if (username) {
 			var captain = Meteor.users.findOne({_id: this.userId});
-			var teamName = Teams.findOne({captain: captain.username}).name;
-			if (Teams.findOne({captain: captain.username})) {
+			var teamName = Teams.findOne({captain: captain.profile.name}).name;
+			if (Teams.findOne({captain: captain.profile.name})) {
 				if (!(username === Teams.findOne({name: teamName}).captain)) {
 					Teams.update({name: teamName}, {
 						$set: {
