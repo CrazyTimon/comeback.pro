@@ -13,7 +13,6 @@
       "rcon": {},
       "steam": {},
       "accounts-steam": {},
-      "accounts-ui-bootstrap-3": {},
       "profile-online": {},
       "config": {},
       "roles": {}
@@ -73,11 +72,6 @@
         "git": "https://github.com/Multiply/meteor-accounts-steam.git",
         "tag": "v0.0.1",
         "commit": "29e8b70d047871fc201c475c763e60d87b16ddcc"
-      },
-      "accounts-ui-bootstrap-3": {
-        "git": "https://github.com/mangasocial/meteor-accounts-ui-bootstrap-3.git",
-        "tag": "v0.2.4",
-        "commit": "cdbd20eb065310c0cc302bbd5f22e5b2121c769a"
       },
       "profile-online": {
         "git": "https://github.com/erundook/meteor-profile-online.git",

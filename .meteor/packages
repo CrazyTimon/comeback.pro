@@ -18,10 +18,10 @@ rcon
 steam
 accounts-base
 accounts-steam
-accounts-ui-bootstrap-3
 spiderable
 email
 profile-online
 accounts-password
 config
 roles
+accounts-ui-bootstrap-3
