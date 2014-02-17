@@ -24,11 +24,7 @@ regTeam = function() {
 };
 
 Handlebars.registerHelper('team', function(username) {
-	if (username) {
-		return Teams.findOne({'members.username': username});
-	} else {
-		return Teams.findOne({'members.username': Meteor.user().profile.name});
-	}
+	return Teams.findOne({'members.username': username});
 });
 
 Handlebars.registerHelper('isMyTeam', function() {
@@ -55,6 +51,8 @@ Template.team.events({
 		Meteor.call('leaveFromTeam', teamName, function(error, result) {
 			if (error) {
 				alert(error);
+			} else {
+				Router.go('/teams');
 			}
 		});
 	},

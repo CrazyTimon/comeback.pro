@@ -2,7 +2,7 @@ sendMessage = function() {
 	if (!($("#chatMessageTextInput").val() == 0)) {
 		var message = new Object();
 		message.text = $("#chatMessageTextInput").val();
-		message.username = Meteor.user().username;
+		message.username = Meteor.user().profile.name;
 		chatCollection.insert({
 			username: message.username,
 			message: message.text,

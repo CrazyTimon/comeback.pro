@@ -1,22 +1,20 @@
 <template name="chat">
-	{{#if currentUser}}
-		<div class="panel panel-default">
-	 		<div class="panel-heading">Чат</div>
-			<div class="panel-body" id="chat">
-				{{#each messages}}
-					{{> chatMessage}}
-				{{else}}
-					<span class="text-muted">Чат пуст</span>
-				{{/each}}
+	<div class="panel panel-default">
+ 		<div class="panel-heading">Чат</div>
+		<div class="panel-body" id="chat">
+			{{#each messages}}
+				{{> chatMessage}}
+			{{else}}
+				<span class="text-muted">Чат пуст</span>
+			{{/each}}
+		</div>
+		<div class="panel-footer">
+			<div class="input-group">
+				<input type="text" class="form-control" id="chatMessageTextInput" placeholder="Сообщение">
+				<span class="input-group-btn">
+					<button class="btn btn-default" id="chatMessageSendButton" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
+				</span>
 			</div>
-			<div class="panel-footer">
-				<div class="input-group">
-					<input type="text" class="form-control" id="chatMessageTextInput" placeholder="Сообщение">
-					<span class="input-group-btn">
-						<button class="btn btn-default" id="chatMessageSendButton" type="button"><span class="glyphicon glyphicon-chevron-right"></span></button>
-					</span>
-				</div>
-			</div>
-	  </div>
-	{{/if}}
+		</div>
+	</div>
 </template>
