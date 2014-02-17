@@ -26,7 +26,7 @@ Template.team.events({
 		}
 	},
 	'click #leaveFromTeam': function(e) {
-		var teamName = Teams.findOne({"members.username": Meteor.user().username}).name;
+		var teamName = Teams.findOne({"members.username": Meteor.user().profile.name}).name;
 		Meteor.call('leaveFromTeam', teamName, function(error, result) {
 			if (error) {
 				alert(error);
@@ -37,7 +37,7 @@ Template.team.events({
 		var target = e.currentTarget;
 		if(!target) return;
 		if(target.hasAttribute("data-id")) {
-			Meteor.call('acceptFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).username, function(error, result) {
+			Meteor.call('acceptFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).profile.name, function(error, result) {
 				if(error) {
 					alert(error);
 				}
@@ -48,7 +48,7 @@ Template.team.events({
 		var target = e.currentTarget;
 		if(!target) return;
 		if(target.hasAttribute("data-id")) {
-			Meteor.call('declineFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).username, function(error, result) {
+			Meteor.call('declineFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).profile.name, function(error, result) {
 				if(error) {
 					alert(error);
 				}
@@ -60,7 +60,7 @@ Template.team.events({
 		if(!target) return;
 		if (confirm("Вы действительно хотите удалить данного пользователя из команды?")) {
 			if(target.hasAttribute("data-id")) {
-				Meteor.call('kickFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).username, function(error, result) {
+				Meteor.call('kickFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).profile.name, function(error, result) {
 					if(error) {
 						alert(error);
 					}
@@ -72,7 +72,7 @@ Template.team.events({
 		var target = e.currentTarget;
 		if(!target) return;
 		if (confirm("Вы действительно хотите назначить данного пользователя капитаном?")) {
-			Meteor.call('makeCaptain', Meteor.users.findOne({_id: target.getAttribute("data-id")}).username, function(error, result) {
+			Meteor.call('makeCaptain', Meteor.users.findOne({_id: target.getAttribute("data-id")}).profile.name, function(error, result) {
 				if(error) {
 					alert(error);
 				}
@@ -83,7 +83,7 @@ Template.team.events({
 
 Template.team.isCaptain = function() {
 	var teamName = Session.get('currentShowTeam');
-	if (Teams.findOne({name: teamName, captain: Meteor.user().username})) {
+	if (Teams.findOne({name: teamName, captain: Meteor.user().profile.name})) {
 		return true;
 	} else {
 		return false;
