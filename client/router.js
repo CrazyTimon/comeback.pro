@@ -1,36 +1,31 @@
 Handlebars.registerHelper('isMyFriend', function(username) {
-	if (Meteor.users.findOne({_id: Meteor.userId(), "profile.friends": {username: username, accepted: true}}) && Meteor.users.findOne({username: username, "profile.friends": {username: Meteor.user().username, accepted: true}})) return true;
+	if (Meteor.users.findOne({_id: Meteor.userId(), "profile.friends": {username: username, accepted: true}}) && Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}})) return true;
 });
 
 Handlebars.registerHelper('isRequesterFriend', function(username) {
-	if (Meteor.users.findOne({username: username, "profile.friends": {username: Meteor.user().username, accepted: true}}) && Meteor.users.findOne({username: Meteor.user().username, "profile.friends": {username: username, accepted: false}})) {
-		return true;
-	}
+	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}}) && Meteor.users.findOne({'profile.username': Meteor.user().profile.name, "profile.friends": {username: username, accepted: false}})) return true;
 });
 
 Handlebars.registerHelper('isAccepterFriend', function(username) {
-	if (Meteor.users.findOne({username: username, "profile.friends": {username: Meteor.user().username, accepted: false}}) && Meteor.users.findOne({username: Meteor.user().username, "profile.friends": {username: username, accepted: true}})) {
-		return true;
+	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: false}}) && Meteor.users.findOne({'profile.name': Meteor.user().profile.name, "profile.friends": {username: username, accepted: true}})) return true;
+});
+
+
+Handlebars.registerHelper('team', function(username) {
+	if (username) {
+		return Teams.findOne({'members.username': username});
+	} else {
+		return Teams.findOne({'members.username': Meteor.user().profile.name});
 	}
 });
 
-
-Handlebars.registerHelper('myTeam', function() {
-	return Teams.findOne({"members.username": Meteor.user().username});
-});
-
-Handlebars.registerHelper('teamName', function(username) {
-	var team = Teams.findOne({"members.username": username})
-	if (team) return team.name;
-});
-
 Handlebars.registerHelper('isMyTeam', function() {
-	return Teams.findOne({"members.username": Meteor.user().username, name: Session.get("currentShowTeam")});
+	return Teams.findOne({"members.username": Meteor.user().profile.name, name: Session.get("currentShowTeam")});
 });
 
 Handlebars.registerHelper('myMatchStatus', function() {
-	if (Matches.findOne({members: Meteor.user().username})) {
-		var status = Matches.findOne({members: Meteor.user().username}).status;
+	if (Matches.findOne({members: Meteor.user().profile.name})) {
+		var status = Matches.findOne({members: Meteor.user().profile.name}).status;
 		if (status) {
 			if (status == "inGame") {
 				return "inGame";
@@ -50,8 +45,8 @@ Handlebars.registerHelper('myMatchStatus', function() {
 });
 
 Handlebars.registerHelper('myMatchId', function() {
-	if (Matches.findOne({members: Meteor.user().username})) {
-		var id = Matches.findOne({members: Meteor.user().username})._id;
+	if (Matches.findOne({members: Meteor.user().profile.name})) {
+		var id = Matches.findOne({members: Meteor.user().profile.name})._id;
 		if (id) {
 			return id;
 		} else {
@@ -137,124 +132,121 @@ Router.configure({
 });
 
 Router.map(function() {
+
 	this.route('index', {
 		path: '/',
 		template: 'index',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
 		},
-		data: function() {
-			return {
-				Teams: function() {
-					return Teams.find();
-				},
-				myTeam: function() {
-					return Teams.findOne({name: Meteor.user().profile.team});
-				},
-				matchesInSearch: function() {
-					return Matches.find({status: 'inSearch'});
-				},
-				matchesInGame: function() {
-					return Matches.find({status: 'inGame'});
-				},
-				matchesPlayed: function() {
-					return Matches.find({status: 'finished'});
-				}
-				
+		data: {
+			Teams: function() {
+				return Teams.find();
+			},
+			matchesInSearch: function() {
+				return Matches.find({status: 'inSearch'});
+			},
+			matchesInGame: function() {
+				return Matches.find({status: 'inGame'});
+			},
+			matchesPlayed: function() {
+				return Matches.find({status: 'finished'});
 			}
 		}
 	});
+
 	this.route('news', {
 		path: '/news',
 		template: 'news',
 		waitOn: function() {
-			return Meteor.subscribe('news');
+			return [
+				Meteor.subscribe('users'),
+				Meteor.subscribe('teams'),
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('news')
+			]
 		},
-		data: function() {
-			return {
-				news: function() {
-					return News.find({sort: {date: -1}});
-				}
+		data: {
+			news: function() {
+				return News.find({}, {sort: {date: -1}});
 			}
 		}
 	});
-	this.route('about', {
-		path: '/about',
-		template: 'about'
-	});
-	this.route('contacts', {
-		path: '/contacts',
-		template: 'contacts'
-	});
+	
 	this.route('users', {
 		path: '/users',
 		template: 'users',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
 		},
-		data: function() {
-			return {
-				users: function() {
-					return Meteor.users.find();
-				}
+		data: {
+			users: function() {
+				return Meteor.users.find();
 			}
 		}
 	});
+
 	this.route('user', {
 		path: '/users/:username',
 		template: 'user',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
 		},
 		data: function() {
-			return Meteor.users.findOne({username: this.params.username});
+			return Meteor.users.findOne({'profile.name': this.params.username})
 		}
 	});
+
 	this.route('teams', {
 		path: '/teams',
 		template: 'teams',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
 		},
-		data: function() {
-			return {
-				teams: function() {
-					return Teams.find();
-				}
+		data: {
+			teams: function() {
+				return Teams.find();
 			}
 		}
 	});
+
 	this.route('team', {
 		path: '/teams/:name',
 		template: 'team',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
 		},
 		data: function() {
-			Session.set("currentShowTeam", this.params.name);
 			return Teams.findOne({name: this.params.name});
 		}
 	});
+
 	this.route('matches',{
 		path: '/matches/:id',
 		template: 'match',
 		waitOn: function() {
 			return [
+				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
@@ -263,10 +255,17 @@ Router.map(function() {
 			return Matches.findOne({_id: this.params.id});
 		}
 	});
+
+	this.route('about', {
+		path: '/about',
+		template: 'about'
+	});
+
 	this.route('contacts', {
 		path: '/contacts',
 		template: 'contacts'
 	});
+
 	this.route('notFound', { 
 		path: '*',
 		template: 'notFound'

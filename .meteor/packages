@@ -15,7 +15,6 @@ fast-render
 handlebar-helpers
 bootstrap-slate
 rcon
-underscore
 steam
 accounts-base
 accounts-steam
@@ -23,3 +22,6 @@ accounts-ui-bootstrap-3
 spiderable
 email
 profile-online
+accounts-password
+config
+roles

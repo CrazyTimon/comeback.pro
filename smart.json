@@ -12,6 +12,8 @@
     "steam": {},
     "accounts-steam": {},
     "accounts-ui-bootstrap-3": {},
-    "profile-online": {}
+    "profile-online": {},
+    "config": {},
+    "roles": {}
   }
 }

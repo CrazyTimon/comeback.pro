@@ -14,7 +14,9 @@
       "steam": {},
       "accounts-steam": {},
       "accounts-ui-bootstrap-3": {},
-      "profile-online": {}
+      "profile-online": {},
+      "config": {},
+      "roles": {}
     },
     "packages": {
       "npm": {
@@ -81,6 +83,16 @@
         "git": "https://github.com/erundook/meteor-profile-online.git",
         "tag": "v0.1.9",
         "commit": "a982f18f22cb2025a02a9b38815c68e23469cd4b"
+      },
+      "config": {
+        "git": "https://github.com/gadicohen/meteor-config.git",
+        "tag": "v0.0.1",
+        "commit": "1ac1a5a0b6a4ec4157d8ce154d4df8b0393433e1"
+      },
+      "roles": {
+        "git": "https://github.com/alanning/meteor-roles.git",
+        "tag": "v1.2.6",
+        "commit": "f2a9058281f8f2fe028767841d7445aadd6893cf"
       },
       "nprogress": {
         "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",
