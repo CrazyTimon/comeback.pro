@@ -61,9 +61,10 @@ Template.team.events({
 		if(!target) return;
 		if(target.hasAttribute("data-id")) {
 			Meteor.call('acceptFromTeam', Meteor.users.findOne({_id: target.getAttribute("data-id")}).profile.name, function(error, result) {
-				if(error) {
+				if (error) {
 					alert(error);
 				}
+				console.log(error, result);
 			});
 		}
 	},
@@ -106,5 +107,7 @@ Template.team.events({
 
 Template.team.isCaptain = function() {
 	var teamName = Session.get('currentShowTeam');
-	Teams.findOne({name: teamName, captain: Meteor.user().profile.name}) ? true : false;
+	if (Teams.findOne({name: teamName, captain: Meteor.user().profile.name})) {
+		return true;
+	}
 };

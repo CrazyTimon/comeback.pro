@@ -83,7 +83,7 @@ Meteor.methods({
 								'members.$.accepted': true
 							}
 						}, function() {
-							teamStream.emit('acceptFromTeam', username, teamName);
+							//teamStream.emit('acceptFromTeam', username, teamName);
 						});
 						
 					} else {
