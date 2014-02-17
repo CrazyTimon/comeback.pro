@@ -33,14 +33,3 @@ Template.chat.events({
 		}
 	}
 });
-
-chatStream.on('chat', function(message) {
-	chatCollection.insert({
-		username: message.username,
-		message: message.text,
-		date: Date.now()
-	});
-	Meteor.setTimeout(function() {
-		$("#chat").scrollTop(99999999);
-	}, 1)
-});

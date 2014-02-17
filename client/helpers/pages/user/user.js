@@ -1,56 +1,14 @@
-mainStream.on('addFriend', function(user, username) {
-	if (username === Meteor.user().username) {
-		var notify = new Notification("Заявка в друзья", {
-			tag: 'addFriend',
-			body: user + ' хочет добавить Вас в друзья',
-			icon: 'http://comeback.pro' + Meteor.users.findOne({username: user}).profile.image
-		});
-		notify.onclick = function() {
-			Router.go('/users/' + user);
-		};
-	}
+Handlebars.registerHelper('isMyFriend', function(username) {
+	if (Meteor.users.findOne({_id: Meteor.userId(), "profile.friends": {username: username, accepted: true}}) && Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}})) return true;
 });
 
-mainStream.on('deleteFriend', function(user, username) {
-	if (username === Meteor.user().username) {
-		var notify = new Notification("ComeBack.pro", {
-			tag: 'deleteFriend',
-			body: user + ' удалил вас из списка друзей',
-			icon: 'http://comeback.pro' + Meteor.users.findOne({username: user}).profile.image
-		});
-		notify.onclick = function() {
-			Router.go('/users/' + user);
-		};
-	}
+Handlebars.registerHelper('isRequesterFriend', function(username) {
+	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}}) && Meteor.users.findOne({'profile.username': Meteor.user().profile.name, "profile.friends": {username: username, accepted: false}})) return true;
 });
 
-mainStream.on('acceptRequestFriend', function(user, username) {
-	if (username === Meteor.user().username) {
-		var notify = new Notification("Заявка принята", {
-			tag: 'acceptRequestFriend',
-			body: user + ' подтвердил, что вы его друг',
-			icon: 'http://comeback.pro' + Meteor.users.findOne({username: user}).profile.image
-		});
-		notify.onclick = function() {
-			Router.go('/users/' + user);
-		};
-	}
+Handlebars.registerHelper('isAccepterFriend', function(username) {
+	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: false}}) && Meteor.users.findOne({'profile.name': Meteor.user().profile.name, "profile.friends": {username: username, accepted: true}})) return true;
 });
-
-mainStream.on('declineRequestFriend', function(user, username) {
-	if (username === Meteor.user().username) {
-		var notify = new Notification("Заявка отклонена", {
-			tag: 'declineRequestFriend',
-			body: user + ' отклонил вашу заявку в друзья',
-			icon: 'http://comeback.pro' + Meteor.users.findOne({username: user}).profile.image
-		});
-		notify.onclick = function() {
-			Router.go('/users/' + user);
-		};
-	}
-});
-
-
 
 Template.user.events({
 	'click #addFriend': function(e) {

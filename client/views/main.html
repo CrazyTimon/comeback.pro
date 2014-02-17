@@ -6,10 +6,18 @@
 </head>
 <template name="layout">
 	<body>
-		<div id="wrap">
-			{{> nav}}
-			{{yield}}
-		</div>
-		{{> footer}}
+		{{#if currentUser}}
+			<div id="wrap">
+				{{> nav}}
+				{{yield}}
+			</div>
+			{{> footer}}
+		{{else}}
+			{{#if loggingIn}}
+				{{> loading}}
+			{{else}}
+				{{> presentPage}}
+			{{/if}}
+		{{/if}}
 	</body>
 </template>

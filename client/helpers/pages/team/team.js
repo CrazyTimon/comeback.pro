@@ -1,3 +1,15 @@
+Handlebars.registerHelper('team', function(username) {
+	if (username) {
+		return Teams.findOne({'members.username': username});
+	} else {
+		return Teams.findOne({'members.username': Meteor.user().profile.name});
+	}
+});
+
+Handlebars.registerHelper('isMyTeam', function() {
+	return Teams.findOne({"members.username": Meteor.user().profile.name, name: Session.get("currentShowTeam")});
+});
+
 Template.team.events({
 	'click #joinTeam': function(e) {
 		if (!(Meteor.user().profile.team)) {

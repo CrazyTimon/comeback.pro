@@ -1,130 +1,3 @@
-Handlebars.registerHelper('isMyFriend', function(username) {
-	if (Meteor.users.findOne({_id: Meteor.userId(), "profile.friends": {username: username, accepted: true}}) && Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}})) return true;
-});
-
-Handlebars.registerHelper('isRequesterFriend', function(username) {
-	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: true}}) && Meteor.users.findOne({'profile.username': Meteor.user().profile.name, "profile.friends": {username: username, accepted: false}})) return true;
-});
-
-Handlebars.registerHelper('isAccepterFriend', function(username) {
-	if (Meteor.users.findOne({'profile.name': username, "profile.friends": {username: Meteor.user().profile.name, accepted: false}}) && Meteor.users.findOne({'profile.name': Meteor.user().profile.name, "profile.friends": {username: username, accepted: true}})) return true;
-});
-
-
-Handlebars.registerHelper('team', function(username) {
-	if (username) {
-		return Teams.findOne({'members.username': username});
-	} else {
-		return Teams.findOne({'members.username': Meteor.user().profile.name});
-	}
-});
-
-Handlebars.registerHelper('isMyTeam', function() {
-	return Teams.findOne({"members.username": Meteor.user().profile.name, name: Session.get("currentShowTeam")});
-});
-
-Handlebars.registerHelper('myMatchStatus', function() {
-	if (Matches.findOne({members: Meteor.user().profile.name})) {
-		var status = Matches.findOne({members: Meteor.user().profile.name}).status;
-		if (status) {
-			if (status == "inGame") {
-				return "inGame";
-			}
-			if (status == "inSearch") {
-				return "inSearch";
-			}
-			if (status == "finished") {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
-Handlebars.registerHelper('myMatchId', function() {
-	if (Matches.findOne({members: Meteor.user().profile.name})) {
-		var id = Matches.findOne({members: Meteor.user().profile.name})._id;
-		if (id) {
-			return id;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
-Handlebars.registerHelper('matchStatus', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
-		if (status) {
-			if (status == "inGame") {
-				return "inGame";
-			}
-			if (status == "inSearch") {
-				return "inSearch";
-			}
-			if (status == "finished") {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
-Handlebars.registerHelper('matchStatusInSearch', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
-		if (status) {
-			if (status == "inSearch") {
-				return "inSearch";
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
-Handlebars.registerHelper('matchStatusInGame', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
-		if (status) {
-			if (status == "inSearch") {
-				return "inGame";
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
-Handlebars.registerHelper('matchId', function(username) {
-	if (Matches.findOne({members: username})) {
-		var id = Matches.findOne({members: username})._id;
-		if (id) {
-			return id;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-});
-
 Router.configure({
 	layoutTemplate: 'layout',
 	notFoundTemplate: 'notFound',
@@ -137,11 +10,13 @@ Router.map(function() {
 		path: '/',
 		template: 'index',
 		waitOn: function() {
-			return [
-				Meteor.subscribe('users'),
-				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
-			]
+			if (Meteor.user()) {
+				return [
+					Meteor.subscribe('users'),
+					Meteor.subscribe('teams'),
+					Meteor.subscribe('matches')
+				]
+			}
 		},
 		data: {
 			Teams: function() {
