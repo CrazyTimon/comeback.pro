@@ -2,7 +2,13 @@
 	{{#if currentUser}}
 		<div class="container">
 			<div class="page-header">
-					<h1>{{#if team user.profile.name}} {{team user.profile.name}} | {{/if}}{{user.profile.name}} <small>{{profile.firstname}} {{profile.lastname}}</small></h1>
+					<h1>
+						{{#if team profile.name}}
+							{{team.name profile.name}} | 
+						{{/if}}
+						{{profile.name}} 
+						<small>{{profile.firstname}} {{profile.lastname}}</small>
+					</h1>
 			</div>
 			<div class="well">
 				<div class="row">
@@ -11,19 +17,19 @@
 							<img src="{{profile.image}}">
 							<div class="caption">
 								<div class="btn-group">
-									{{#if $neq user.profile.name currentUser.profile.name}}
+									{{#if $neq profile.name currentUser.profile.name}}
 										<button id="#pm" class="btn btn-primary" title="Отправить сообщение"><span class="glyphicon glyphicon-envelope"></span> Сообщение</button>
-										{{#if isMyFriend user.profile.name}}
-											<button id="deleteFriend" class="btn btn-danger" data-id="{{user.profile.name}}" title="Удалить из списка друзей"><span class="glyphicon glyphicon-remove"></span></button>	
+										{{#if isMyFriend profile.name}}
+											<button id="deleteFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Удалить из списка друзей"><span class="glyphicon glyphicon-remove"></span></button>	
 										{{else}}
-											{{#if isRequesterFriend user.profile.name}}
-												<button id="acceptRequestFriend" class="btn btn-info" data-id="{{user.profile.name}}" title="Подтвердить заявку в друзья"><span class="glyphicon glyphicon-ok"></span></button>
-												<button id="declineRequestFriend" class="btn btn-danger" data-id="{{user.profile.name}}" title="Отклонить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
+											{{#if isRequesterFriend profile.name}}
+												<button id="acceptRequestFriend" class="btn btn-info" data-id="{{profile.name}}" title="Подтвердить заявку в друзья"><span class="glyphicon glyphicon-ok"></span></button>
+												<button id="declineRequestFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Отклонить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
 											{{else}}
-												{{#if isAccepterFriend user.profile.name}}
-													<button id="abortRequestFriend" class="btn btn-warning" data-id="{{user.profile.name}}" title="Отменить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
+												{{#if isAccepterFriend profile.name}}
+													<button id="abortRequestFriend" class="btn btn-warning" data-id="{{profile.name}}" title="Отменить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
 												{{else}}
-													<button id="addFriend" class="btn btn-success" data-id="{{user.profile.name}}" title="Добавить пользователя в список друзей"><span class="glyphicon glyphicon-plus-sign"></span> В друзья</button>
+													<button id="addFriend" class="btn btn-success" data-id="{{profile.name}}" title="Добавить пользователя в список друзей"><span class="glyphicon glyphicon-plus-sign"></span> В друзья</button>
 												{{/if}}
 											{{/if}}
 										{{/if}}

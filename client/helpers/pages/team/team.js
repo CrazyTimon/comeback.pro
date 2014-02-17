@@ -1,3 +1,28 @@
+regTeam = function() {
+	if (!(Meteor.user().profile.team)) {
+		var teamName = $("#teamName").val();
+		if (teamName) {
+			if (!(Teams.findOne({name: teamName}))) {
+				
+				Meteor.call('createTeam', teamName, Meteor.users.findOne()._id, function(error, result) {
+					if (error) {
+						alert(error);
+					} else {
+						$('#regTeamModal').modal('hide');
+						Router.go('/teams/' + teamName);
+					}
+				});
+			} else {
+				alert("Такая команда уже существует");
+			}
+		} else {
+			alert("Заполните поле");
+		}
+	} else {
+		alert("Вы уже в команде");
+	}
+};
+
 Handlebars.registerHelper('team', function(username) {
 	if (username) {
 		return Teams.findOne({'members.username': username});
@@ -12,13 +37,13 @@ Handlebars.registerHelper('isMyTeam', function() {
 
 Template.team.events({
 	'click #joinTeam': function(e) {
-		if (!(Meteor.user().profile.team)) {
+		if (!(Teams.findOne({'members.username': Meteor.user().profile.name}))) {
 			Meteor.call('joinToTeam', Session.get("currentShowTeam"), function(error, result) {
 				if (error) {
 					alert(error);
 				}
 				if (result) {
-					alert("Заявка отправлена капитану, ожидайте.");
+					alert(result);
 				}
 			});
 		} else {
@@ -83,9 +108,5 @@ Template.team.events({
 
 Template.team.isCaptain = function() {
 	var teamName = Session.get('currentShowTeam');
-	if (Teams.findOne({name: teamName, captain: Meteor.user().profile.name})) {
-		return true;
-	} else {
-		return false;
-	}
+	Teams.findOne({name: teamName, captain: Meteor.user().profile.name}) ? true : false;
 };

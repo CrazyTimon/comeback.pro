@@ -1,28 +1,3 @@
-regTeam = function() {
-	if (!(Meteor.user().profile.team)) {
-		var teamName = $("#teamName").val();
-		if (teamName) {
-			if (!(Teams.findOne({name: teamName}))) {
-				
-				Meteor.call('createTeam', teamName, Meteor.users.findOne()._id, function(error, result) {
-					if (error) {
-						alert(error);
-					} else {
-						$('#regTeamModal').modal('hide');
-						Router.go('/teams/' + teamName);
-					}
-				});
-			} else {
-				alert("Такая команда уже существует");
-			}
-		} else {
-			alert("Заполните поле");
-		}
-	} else {
-		alert("Вы уже в команде");
-	}
-};
-
 Template.index.events({
 	'click #regButton': function(e) {
 		e.stopPropagation();

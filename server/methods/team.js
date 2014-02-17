@@ -7,13 +7,13 @@ Meteor.methods({
 				if (!Meteor.users.findOne({_id: this.userId}).profile.team) {
 					var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 					if (!Teams.findOne({captain: username})) {
-							var username = Meteor.users.findOne({_id: this.userId}).profile.name;
-							var teamId = Teams.insert({
-								name: teamName,
-								captain: username,
-								dateCreate: Date.now(), 
-								image: "/img/teams/default.png"
-							});
+						var username = Meteor.users.findOne({_id: this.userId}).profile.name;
+						var teamId = Teams.insert({
+							name: teamName,
+							captain: username,
+							dateCreate: Date.now(), 
+							image: "/img/teams/default.png"
+						});
 						Teams.update({_id: teamId}, {
 							$addToSet: {
 								members: {
@@ -52,8 +52,10 @@ Meteor.methods({
 								dateJoin: Date.now()
 							}
 						}
+					}, function() {
+						teamStream.emit('joinToTeam', captain, username);
 					});
-					mainStream.emit('joinToTeam', captain, username);
+					return 'Заявка принята, ожидайте подтверждение капитана команды ' + teamName;
 				} else {
 					throw new Meteor.Error(404, "Команда " + teamName + " не найдена.");
 				}
@@ -76,13 +78,14 @@ Meteor.methods({
 						Teams.update({
 							_id: teamId, 
 							"members.username": username
-						}, 
-						{
+						}, {
 							$set: {
 								'members.$.accepted': true
 							}
+						}, function() {
+							teamStream.emit('acceptFromTeam', username, teamName);
 						});
-						mainStream.emit('acceptFromTeam', username, teamName);
+						
 					} else {
 						throw new Meteor.Error(403, "Данный пользователь уже допущен к команде");
 					}
@@ -111,8 +114,10 @@ Meteor.methods({
 									username: username
 								}
 							}
+						}, function() {
+							teamStream.emit('declineFromTeam', username, teamName);
 						});
-						mainStream.emit('declineFromTeam', username, teamName);
+						
 					} else {
 						throw new Meteor.Error(403, "Данный пользователь уже допущен к команде");
 					}
@@ -143,8 +148,9 @@ Meteor.methods({
 											username: username
 										}
 									}
+								}, function() {
+									teamStream.emit('kickFromTeam', username, teamName);
 								});
-								mainStream.emit('kickFromTeam', username, teamName);
 							}
 						} else {
 							throw new Meteor.Error(403, "Ваша команда учавствует на CW");
@@ -177,9 +183,10 @@ Meteor.methods({
 										username: username
 									}
 								}
-							});
-							var captain = Teams.findOne({name: teamName}).captain;
-							mainStream.emit('leaveFromTeam', captain, username);
+							}, function() {
+								var captain = Teams.findOne({name: teamName}).captain;
+								teamStream.emit('leaveFromTeam', captain, username);
+							});	
 						}
 					} else {
 						throw new Meteor.Error(403, "Ваша команда учавствует на CW");

@@ -19,9 +19,6 @@ Router.map(function() {
 			}
 		},
 		data: {
-			Teams: function() {
-				return Teams.find();
-			},
 			matchesInSearch: function() {
 				return Matches.find({status: 'inSearch'});
 			},
@@ -110,6 +107,9 @@ Router.map(function() {
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches')
 			]
+		},
+		before: function() {
+			Session.set('currentShowTeam', this.params.name);
 		},
 		data: function() {
 			return Teams.findOne({name: this.params.name});
