@@ -16,7 +16,8 @@ if (Meteor.isServer) {
 			return Meteor.users.find({}, {
 				fields: {
 					'profile': 1,
-					'roles': 1
+					'roles': 1,
+					'services.steam': 1
 				}
 			});
 		} else {
