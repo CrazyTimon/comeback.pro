@@ -12,7 +12,7 @@ Meteor.methods({
 							name: teamName,
 							captain: username,
 							dateCreate: Date.now(), 
-							image: "/img/teams/default.png"
+							image: "/img/teams/default.jpg"
 						});
 						Teams.update({_id: teamId}, {
 							$addToSet: {
