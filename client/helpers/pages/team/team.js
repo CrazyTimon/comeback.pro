@@ -54,8 +54,7 @@ Template.team.events({
 		}
 	},
 	'click #leaveFromTeam': function(e) {
-		var teamName = Teams.findOne({"members.username": Meteor.user().profile.name}).name;
-		Meteor.call('leaveFromTeam', teamName, function(error, result) {
+		Meteor.call('leaveFromTeam', function(error, result) {
 			if (error) {
 				alert(error);
 			} else {
