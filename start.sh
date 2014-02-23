@@ -1,1 +1,1 @@
-screen -AdmS comeback.pro sudo ROOT_URL=http://maxpain177.comeback.pro:80/ mrt --production --port 80
+screen -AdmS comeback.pro sudo ROOT_URL=http://comeback.pro:80/ mrt --production --port 80
