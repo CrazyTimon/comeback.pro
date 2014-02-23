@@ -24,8 +24,15 @@ regTeam = function() {
 };
 
 Handlebars.registerHelper('team', function(username) {
-	return Teams.findOne({'members.username': username});
+	var Team = Teams.findOne({'members.username': username});
+	if (Team) return Team.name;
 });
+
+Handlebars.registerHelper('myTeam', function() {
+	var Team = Teams.findOne({'members.username': Meteor.user().profile.name});
+	if (Team) return Team;
+});
+
 
 Handlebars.registerHelper('isMyTeam', function() {
 	return Teams.findOne({"members.username": Meteor.user().profile.name, name: Session.get("currentShowTeam")});

@@ -135,7 +135,9 @@
 							                    <div class="col-lg-6">
 							                      <select multiple class="form-control" id="selectPlayers">
 							                      	{{#each myTeam.members}}
-							                      		{{#if $neq username user.username}}<option>{{username}}</option>{{/if}}
+							                      		{{#if $neq username currentUser.profile.name}}
+							                      			<option>{{username}}</option>
+							                      		{{/if}}
 							                      	{{else}}
 							                      		<option>В команде никого нет</option>
 							                      	{{/each}}

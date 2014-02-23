@@ -138,7 +138,7 @@ Meteor.methods({
 			if (Teams.findOne({captain: captain.profile.name})) {
 				if (Teams.findOne({captain: captain.profile.name, "members.username": username})) {
 					if (!(Teams.findOne({name: teamName}).captain === username) || Teams.findOne({name: teamName}).members.length === 1) {
-						if ( !(Matches.findOne({'team.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
+						if ( !(Matches.findOne({'team1.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
 							if (Teams.findOne({name: teamName}).members.length === 1) {
 								Teams.remove({name: teamName});
 							} else {
@@ -173,7 +173,7 @@ Meteor.methods({
 			var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 			if (Teams.findOne({"members.username": username})) {
 				if (!(Teams.findOne({name: teamName}).captain === username) || Teams.findOne({name: teamName}).members.length === 1) {
-					if ( !(Matches.findOne({'team.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
+					if ( !(Matches.findOne({'team1.name': teamName}) || Matches.findOne({'team2.name': teamName})) ) {
 						if (Teams.findOne({name: teamName}).members.length === 1) {
 							Teams.remove({name: teamName});
 						} else {

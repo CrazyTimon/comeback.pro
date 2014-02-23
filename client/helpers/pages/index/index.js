@@ -42,8 +42,11 @@ Template.index.events({
 			server = 'MSK';
 		}
 		var map = $("#selectMap").val();
-		var members = $("#selectPlayers").val();
-		members.push(Meteor.user().username);
+		var members = [];
+		if ($("#selectPlayers").val()) {
+			members.push($("#selectPlayers").val());
+		}
+		members.push(Meteor.user().profile.name);
 		Meteor.call('startMatch', server, map, members, function(error, result) {
 			if (error) {
 				alert(error);

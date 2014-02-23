@@ -104,7 +104,11 @@ Template.match.events({
 	'click #abortMatch': function () {
 		if (confirm("Вы действительно хотите отменить текущий матч?")) {
 			Meteor.call('abortMatch', function(error, result) {
-				if (error) alert(error);
+				if (error) {
+					alert(error);
+				} else {
+					Router.go('/');
+				}
 			});
 		}
 	},
