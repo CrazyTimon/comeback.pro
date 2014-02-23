@@ -20,6 +20,7 @@ Meteor.startup(function() {
 				rconC.query('cw_start ' + team1Name + ' ' + team2Name);
 			});
 			Servers.update({name: serverName}, {$set: {lastUsedPort: port}});
+			Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port}});
 		};
 	}
 });
