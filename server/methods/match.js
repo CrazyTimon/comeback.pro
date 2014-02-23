@@ -46,7 +46,7 @@ Meteor.methods({
 				status: 'inGame'
 			}
 		}, function() {
-			startServer(match._id, match.server, match.map, match.type, match.team1.name, team2.name);
+			Servers.start(match._id, match.server, match.map, match.type, match.team1.name, team2.name);
 		});
 		
 	}

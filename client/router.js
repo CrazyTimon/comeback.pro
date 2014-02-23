@@ -14,7 +14,8 @@ Router.map(function() {
 				return [
 					Meteor.subscribe('users'),
 					Meteor.subscribe('teams'),
-					Meteor.subscribe('matches')
+					Meteor.subscribe('matches'),
+					Meteor.subscribe('servers')
 				]
 			}
 		},
@@ -39,7 +40,8 @@ Router.map(function() {
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
 				Meteor.subscribe('matches'),
-				Meteor.subscribe('news')
+				Meteor.subscribe('news'),
+				Meteor.subscribe('servers')
 			]
 		},
 		data: {
@@ -56,7 +58,8 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers')
 			]
 		},
 		data: {
@@ -73,7 +76,8 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers')
 			]
 		},
 		data: function() {
@@ -88,7 +92,8 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers')
 			]
 		},
 		data: {
@@ -105,7 +110,8 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers')
 			]
 		},
 		before: function() {
@@ -123,7 +129,8 @@ Router.map(function() {
 			return [
 				Meteor.subscribe('users'),
 				Meteor.subscribe('teams'),
-				Meteor.subscribe('matches')
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers')
 			]
 		},
 		data: function() {
