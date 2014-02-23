@@ -5,7 +5,12 @@
 				<div class='row'>
 					<div class="page-header">
 						<h1>
-							{{team.name}}{{#if team2}} vs {{team2.name}}{{/if}}
+							{{team1.name}} vs
+							{{#if team2}}
+								{{team2.name}}
+							{{else}}
+								?
+							{{/if}}
 							<small class="pull-right">
 								<span class="label label-default text-muted">{{type}}</span>
 								|
@@ -16,29 +21,83 @@
 						</h1>
 					</div>
 				</div>
-				<div class="row well">
-					<div class='col-md-4'>
-						<div class="center">
-							<img src="{{team.image}}" height="150px">
+				<div class="row">
+					<div class="row">
+						<div class='col-md-4'>
+							<div class="center">
+								<img src="{{team1.image}}">
+								<ul class="list-group">
+									{{#each membersTeam1}}
+										  <li class="list-group-item">{{this}}</li>
+									{{/each}}
+								</ul>
+							</div>
+						</div>
+						<div class='col-md-4 center'>
+							<h1>VS</h1>
+							<div class='btn-group-vertical'>
+								{{#if $eq myMatchId _id}}
+									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
+								{{else}}
+									{{#if $neq team1 team currentUser.profile.name}}
+										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
+										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
+													</div>
+													<div class="modal-body">
+														<div class="form-group">
+															<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
+															<div class="col-lg-6">
+																<select multiple class="form-control" id="selectPlayers">
+																{{#each myTeam.members}}
+																	<option>{{username}}</option>
+																{{/each}}
+																</select>
+																<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+															</div>
+														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+														<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									{{/if}}
+								{{/if}}
+							</div>
+						</div>
+						<div class='col-md-4'>
+							<div class="center">
+								{{#if team2}}
+									<img src="{{team2.image}}" height="150px">
+									<ul class="list-group">
+										{{#each membersTeam2}}
+											  <li class="list-group-item">{{this}}</li>
+										{{/each}}
+									</ul>
+								{{else}}
+									{{#if $neq myMatchId _id}}
+										<a href="#" class="goCW" data-id="{{_id}}">
+											<img src="/img/plus.png" height="150px">
+										</a>
+									{{else}}
+										<img src="/img/plus.png" height="150px">
+									{{/if}}
+								{{/if}}
+							</div>
 						</div>
 					</div>
-					<div class='col-md-4 center'>
-						<img src="/img/vs.png">	
-						<div class='btn-group-vertical'>
-							{{#if $eq myMatchId _id}}
-								<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
-							{{else}}
-								{{#if $neq team1 user.team}}<button class="btn btn-success goCW" data-id="{{_id}}">Сыграть CW</button>{{/if}}
-							{{/if}}
-						</div>
-					</div>
-					<div class='col-md-4'>
-						<div class="center">
-							{{#if team2}}
-								<img src="{{team2.image}}" height="150px">
-							{{else}}
-								{{#if $neq myMatchId _id}}<a href="#" class="goCW" data-id="{{_id}}">{{/if}}<img src="/img/plus.png" height="150px">{{#if $neq myMatchId _id}}</a>{{/if}}
-							{{/if}}
+					<hr>
+					<div class="row">
+						<div class="col-md-offset-4 col-md-4 center">
+							<h3>Сервер</h3>
+							<p></p>
 						</div>
 					</div>
 				</div>

@@ -1,22 +1,22 @@
 Meteor.methods({
-	startMatch: function(server, map, members) {
+	startMatch: function(server, map, membersTeam1) {
 		if (!this.userId) throw new Meteor.Error(403, "Доступ запрещен");
 		var team1 = Teams.findOne({"members._id": this.userId});
-		if (!(server && map && team1 && members)) throw new Meteor.Error(404, "Нет аргументов");
+		if (!(server && map && team1 && membersTeam1)) throw new Meteor.Error(404, "Нет аргументов");
 		if (Matches.findOne({team2: team1}) && Matches.findOne({team1: team1})) throw new Meteor.Error(403, "Ваша команда уже в другой игре");
-		if (members.length > 5) throw new Meteor.Error(403, "Вы выбрали больше 5 игроков.");
-		for (var i = 0; i < members.length; i++) {
-			var member = members[i];
-			if (!Teams.findOne({"members.username": member})) {
+		if ((membersTeam1.length > 5) || (membersTeam1.length < 1)) throw new Meteor.Error(403, "Вы выбрали больше 5 / меньше 1 игроков.");
+		for (var i = 0; i < membersTeam1.length; i++) {
+			var memberTeam1 = membersTeam1[i];
+			if (!Teams.findOne({"members.username": memberTeam1})) {
 				break;
 				throw new Meteor.Error(403, "Пользователь не найден");
 			}
 		}
-		var type = members.length + "x" + members.length;
-		var matchId = Matches.insert({server: server, map: map, type: type, team1: team1, members: members, status: 'inSearch'});
-		for (var i = 0; i < members.length; i++) {
-			var member = members[i];
-			Meteor.users.update({username: member}, {$set: {"profile.inGame": true}}, function() {
+		var type = membersTeam1.length + "x" + membersTeam1.length;
+		var matchId = Matches.insert({server: server, map: map, type: type, team1: team1, membersTeam1: membersTeam1, status: 'inSearch'});
+		for (var i = 0; i < membersTeam1.length; i++) {
+			var memberTeam1 = membersTeam1[i];
+			Meteor.users.update({username: memberTeam1}, {$set: {"profile.inGame": true}}, function() {
 				matchStream.emit('makeMatch', member, matchId, type, map);
 			});
 		}
@@ -27,12 +27,12 @@ Meteor.methods({
 		if (!this.userId) throw new Meteor.Error(403, "Доступ запрещен");
 		var team1 = Teams.findOne({"members._id": this.userId});
 		var username = Meteor.users.findOne({_id: this.userId}).profile.name;
-		if (!Matches.findOne({'team1.name': team1.name, "members": username})) throw new Meteor.Error(403, "Вы не начинали CW");
-		if (Matches.findOne({'team1.name': team1.name, "members": username}).status === 'inGame') throw new Meteor.Error(403, "Игра уже началась");
-		Matches.remove({'team1.name': team1.name, "members": username});
+		if (!Matches.findOne({'team1.name': team1.name, "membersTeam1": username})) throw new Meteor.Error(403, "Вы не начинали CW");
+		if (Matches.findOne({'team1.name': team1.name, "membersTeam1": username}).status === 'inGame') throw new Meteor.Error(403, "Игра уже началась");
+		Matches.remove({'team1.name': team1.name, "membersTeam1": username});
 	},
 
-	goCW: function(matchId) {
+	goCW: function(matchId, membersTeam2) {
 		if (!matchId) throw new Meteor.Error(404, "ID матча не найден");
 		var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 		var team2 = Teams.findOne({"members.username": username});
@@ -43,6 +43,7 @@ Meteor.methods({
 		Matches.update({_id: matchId}, {
 			$set: {
 				team2: team2,
+				membersTeam2: membersTeam2,
 				status: 'inGame'
 			}
 		}, function() {

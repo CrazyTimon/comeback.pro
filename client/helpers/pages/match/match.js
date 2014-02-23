@@ -1,6 +1,6 @@
 Handlebars.registerHelper('myMatchStatus', function() {
-	if (Matches.findOne({members: Meteor.user().profile.name})) {
-		var status = Matches.findOne({members: Meteor.user().profile.name}).status;
+	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}).status || Matches.findOne({membersTeam2: Meteor.user().profile.name}).status) {
+		var status = Matches.findOne({membersTeam1: Meteor.user().profile.name}).status || Matches.findOne({membersTeam2: Meteor.user().profile.name}).status;
 		if (status) {
 			if (status == "inGame") {
 				return "inGame";
@@ -20,8 +20,8 @@ Handlebars.registerHelper('myMatchStatus', function() {
 });
 
 Handlebars.registerHelper('myMatchId', function() {
-	if (Matches.findOne({members: Meteor.user().profile.name})) {
-		var id = Matches.findOne({members: Meteor.user().profile.name})._id;
+	if (Matches.findOne({membersTeam1: Meteor.user().profile.name})._id || Matches.findOne({membersTeam2: Meteor.user().profile.name})._id) {
+		var id = Matches.findOne({membersTeam1: Meteor.user().profile.name})._id || Matches.findOne({membersTeam2: Meteor.user().profile.name})._id;
 		if (id) {
 			return id;
 		} else {
@@ -33,8 +33,8 @@ Handlebars.registerHelper('myMatchId', function() {
 });
 
 Handlebars.registerHelper('matchStatus', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
+	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
+		var status =  Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
 		if (status) {
 			if (status == "inGame") {
 				return "inGame";
@@ -54,8 +54,8 @@ Handlebars.registerHelper('matchStatus', function(username) {
 });
 
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
+	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
+		var status =  Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
 		if (status) {
 			if (status == "inSearch") {
 				return "inSearch";
@@ -71,8 +71,8 @@ Handlebars.registerHelper('matchStatusInSearch', function(username) {
 });
 
 Handlebars.registerHelper('matchStatusInGame', function(username) {
-	if (Matches.findOne({members: username})) {
-		var status = Matches.findOne({members: username}).status;
+	if ( Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
+		var status = Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
 		if (status) {
 			if (status == "inSearch") {
 				return "inGame";
@@ -88,8 +88,8 @@ Handlebars.registerHelper('matchStatusInGame', function(username) {
 });
 
 Handlebars.registerHelper('matchId', function(username) {
-	if (Matches.findOne({members: username})) {
-		var id = Matches.findOne({members: username})._id;
+	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
+		var id = Matches.findOne({membersTeam1: username})._id || Matches.findOne({membersTeam2: username})._id;
 		if (id) {
 			return id;
 		} else {
@@ -116,8 +116,9 @@ Template.match.events({
 		e.preventDefault();
 		var target = e.currentTarget;
 		if(!target) return;
+		var members = $('#selectPlayers').val();
 		if(target.hasAttribute("data-id")) {
-			Meteor.call('goCW', target.getAttribute("data-id"),function(error, result) {
+			Meteor.call('goCW', target.getAttribute("data-id"), members, function(error, result) {
 				if (error) alert(error);
 			});
 		}
