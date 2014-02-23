@@ -1,5 +1,5 @@
 Handlebars.registerHelper('myMatchStatus', function() {
-	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}).status || Matches.findOne({membersTeam2: Meteor.user().profile.name}).status) {
+	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}) || Matches.findOne({membersTeam2: Meteor.user().profile.name})) {
 		var status = Matches.findOne({membersTeam1: Meteor.user().profile.name}).status || Matches.findOne({membersTeam2: Meteor.user().profile.name}).status;
 		if (status) {
 			if (status == "inGame") {
@@ -20,7 +20,7 @@ Handlebars.registerHelper('myMatchStatus', function() {
 });
 
 Handlebars.registerHelper('myMatchId', function() {
-	if (Matches.findOne({membersTeam1: Meteor.user().profile.name})._id || Matches.findOne({membersTeam2: Meteor.user().profile.name})._id) {
+	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}) || Matches.findOne({membersTeam2: Meteor.user().profile.name})) {
 		var id = Matches.findOne({membersTeam1: Meteor.user().profile.name})._id || Matches.findOne({membersTeam2: Meteor.user().profile.name})._id;
 		if (id) {
 			return id;
