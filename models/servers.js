@@ -3,10 +3,10 @@ Meteor.startup(function() {
 		ssh2 = Meteor.require('ssh2');
 		c = new ssh2();
 		c.connect({
-			host: 'comeback.pro',
+			host: Servers.findOne({name: 'NSK'}).ip,
 			port: 22,
-			username: 'maxpain177',
-			password: '64276427'
+			username: Servers.findOne({name: 'NSK'}).login,
+			password: Servers.findOne({name: 'NSK'}).password
 		})
 		Servers.start = function(matchId, serverName, map, type, team1_id, team2_id) {
 			if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
