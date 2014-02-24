@@ -46,36 +46,38 @@
 								{{#if $eq _id matchId currentUser.profile.name}}
 									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 								{{else}}
-									{{#if $neq team1._id team currentUser.profile.name}}
-										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
-										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
-													</div>
-													<div class="modal-body">
-														<div class="form-group">
-															<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
-															<div class="col-lg-6">
-																<select multiple class="form-control" id="selectPlayers">
-																{{#each myTeam.members}}
-																	<option selected>{{username}}</option>
-																{{/each}}
-																</select>
-																<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+									{{#with team currentUser.profile.name 'byUserName'}}
+										{{#if $neq team1._id _id}}
+											<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
+											<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
+														</div>
+														<div class="modal-body">
+															<div class="form-group">
+																<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
+																<div class="col-lg-6">
+																	<select multiple class="form-control" id="selectPlayers">
+																	{{#each myTeam.members}}
+																		<option selected>{{username}}</option>
+																	{{/each}}
+																	</select>
+																	<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+																</div>
 															</div>
 														</div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-														<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+															<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									{{/if}}
+										{{/if}}
+									{{/with}}
 								{{/if}}
 							</div>
 						</div>
