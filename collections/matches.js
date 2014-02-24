@@ -3,13 +3,13 @@ Matches = new Meteor.Collection("Matches");
 if (Meteor.isServer) {
 	Matches.allow({
 		insert: function (userId, doc) {
-			return true;
+			if (Roles.userIsInRole(userId, ['admin'])) return true;
 		},
 		update: function (userId, doc, fields, modifier) {
-			return true;
+			if (Roles.userIsInRole(userId, ['admin'])) return true;
 		},
 		remove: function (userId, doc) {
-			return true;
+			if (Roles.userIsInRole(userId, ['admin'])) return true;
 		}
 	});
 
