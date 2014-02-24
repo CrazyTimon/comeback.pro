@@ -1,19 +1,21 @@
-<template name="matchInSearch">
-<tr>
-	<td>
-		<a href="/teams/{{team1.name}}/">
-			<img height="40px" src="{{team1.image}}">
-		</a>
-	</td>
-	<td>
-		<a href="/teams/{{team1.name}}/">{{team1.name}}</a>
-	</td>
-	<td>{{type}}</td>
-	<td>{{map}}</td>
-	<td>
-		<a href="/matches/{{_id}}" class="btn btn-default">
-			<span class="glyphicon glyphicon-chevron-right"></span>
-		</a>
-	</td>
+<template name='matchInSearch'>
+	<tr>
+		<td>
+			{{#with team team1._id "byTeamId"}}
+			<a href='/teams/{{name}}/'>
+				<img height='40px' src='{{image}}'>
+			</a>
+			{{/with}}
+		</td>
+		<td>
+			<a href='/teams/{{team1.name}}/'>{{team1.name}}</a>
+		</td>
+		<td>{{type}}</td>
+		<td>{{map}}</td>
+		<td>
+			<a href='/matches/{{_id}}' class='btn btn-default'>
+				<span class='glyphicon glyphicon-chevron-right'></span>
+			</a>
+		</td>
 </tr>
 </template>

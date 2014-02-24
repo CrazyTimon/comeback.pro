@@ -35,25 +35,8 @@ Template.index.events({
 		}
 	},
 	'click #matchStart': function(e) {
-		var server;
-		if ($("#selectServer").val() == "Новосибирск") {
-			server = 'NSK';
-		} else {
-			server = 'MSK';
-		}
-		var map = $("#selectMap").val();
-		var members = [];
-		if ($("#selectPlayers").val()) {
-			members.push($("#selectPlayers").val());
-		}
-		members.push(Meteor.user().profile.name);
-		Meteor.call('startMatch', server, map, members, function(error, result) {
-			if (error) {
-				alert(error);
-			}
-			if (result) {
-				Meteor.go("/matches/" + result);
-			}
+		Meteor.call('startMatch', $("#selectServer").val(), $("#selectMap").val(), $("#selectPlayers").val(), function(error, result) {
+			error ? alert(error) : Meteor.go("/matches/" + result)
 		});
 	}
 });

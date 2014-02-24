@@ -1,30 +1,30 @@
-<template name="index">
-	{{#if team currentUser.profile.name}}
-		<div class="container">
-			<div class="row">
-				<div class="col-md-9 col-md-8">
-					<ul id="tabsMatches" class="nav nav-tabs">
-					<li class="active">
-						<a href="#matchesInSearch" data-toggle="tab">В поиске</a>
+<template name='index'>
+	{{#if team '' ''}}
+		<div class='container'>
+			<div class='row'>
+				<div class='col-md-9 col-md-8'>
+					<ul id='tabsMatches' class='nav nav-tabs'>
+					<li class='active'>
+						<a href='#matchesInSearch' data-toggle='tab'>В поиске</a>
 					</li>
 					<li>
-						<a href="#matchesInGame" data-toggle="tab">В игре</a>
+						<a href='#matchesInGame' data-toggle='tab'>В игре</a>
 					</li>
 					<li>
-						<a href="#matchesPlayed" data-toggle="tab">Законченные</a>
+						<a href='#matchesPlayed' data-toggle='tab'>Законченные</a>
 					</li>
-					<li class="pull-right">
-						{{#if myMatchStatus}}
-							<a href="/matches/{{myMatchId}}" class="btn btn-info">Мой матч</a>
+					<li class='pull-right'>
+						{{#if matchStatus currentUser.profile.name}}
+							<a href='/matches/{{myMatchId}}' class='btn btn-info'>Мой матч</a>
 						{{else}}
-							<a href="#matchCreate" class="btn btn-link" data-toggle="tab">Создать матч</a>
+							<a href='#matchCreate' class='btn btn-link' data-toggle='tab'>Создать матч</a>
 						{{/if}}
 					</li>
 				 </ul>
-				 <div id="matches" class="tab-content">
-					<div class="tab-pane fade active in" id="matchesInSearch">
+				 <div id='matches' class='tab-content'>
+					<div class='tab-pane fade active in' id='matchesInSearch'>
 						{{#if matchesInSearch.count}}
-							<table class="table table-striped table-bordered table-hover">
+							<table class='table table-striped table-bordered table-hover'>
 								<thead>
 									<tr>
 										<th></th>
@@ -32,7 +32,7 @@
 										<th>Тип</th>
 										<th>Карта</th>
 										<th>
-											<span class="glyphicon glyphicon-chevron-down"></span>
+											<span class='glyphicon glyphicon-chevron-down'></span>
 										</th>
 									</tr>
 								</thead>
@@ -43,12 +43,12 @@
 								</tbody>
 							</table>
 						{{else}}
-							<h1 class="text-primary">Матчей пока нет</h1>
+							<h1 class='text-primary'>Матчей пока нет</h1>
 						{{/if}}
 					</div>
-					<div class="tab-pane fade" id="matchesInGame">
+					<div class='tab-pane fade' id='matchesInGame'>
 						{{#if matchesInGame.count}}
-							<table class="table table-striped table-bordered table-hover">
+							<table class='table table-striped table-bordered table-hover'>
 								<thead>
 									<tr>
 										<th>#</th>
@@ -59,7 +59,7 @@
 										<th>Карта</th>
 										<th>Статус</th>
 										<th>
-											<span class="glyphicon glyphicon-chevron-down"></span>
+											<span class='glyphicon glyphicon-chevron-down'></span>
 										</th>
 									</tr>
 								</thead>
@@ -70,12 +70,12 @@
 								</tbody>
 							</table>
 						{{else}}
-							<h1 class="text-primary">Сейчас никто не играет CW</h1>
+							<h1 class='text-primary'>Сейчас никто не играет CW</h1>
 						{{/if}}
 					</div>
-					<div class="tab-pane fade" id="matchesPlayed">
+					<div class='tab-pane fade' id='matchesPlayed'>
 						{{#if matchesPlayed.count}}
-							<table class="table table-striped table-bordered table-hover">
+							<table class='table table-striped table-bordered table-hover'>
 								<thead>
 									<tr>
 										<th>#</th>
@@ -87,7 +87,7 @@
 										<th>Карта</th>
 										<th>Дата</th>
 										<th>
-											<span class="glyphicon glyphicon-chevron-down"></span>
+											<span class='glyphicon glyphicon-chevron-down'></span>
 										</th>
 									</tr>
 								</thead>
@@ -98,56 +98,56 @@
 								</tbody>
 							</table>
 						{{else}}
-							<h1 class="text-primary">Пока нет сыгранных CW</h1>
+							<h1 class='text-primary'>Пока нет сыгранных CW</h1>
 						{{/if}}
 					</div>
-					{{#unless myMatchStatus}}
-						<div class="tab-pane fade" id="matchCreate">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="well">
-										<form class="form-horizontal">
+					{{#unless matchStatus currentUser.profile.name}}
+						<div class='tab-pane fade' id='matchCreate'>
+							<div class='row'>
+								<div class='col-sm-12'>
+									<div class='well'>
+										<form class='form-horizontal'>
 											<legend>Создать CW</legend>
-											<div class="form-group">
-												<label for="selectServer" class="col-lg-3 control-label">Сервер</label>
-												<div class="col-lg-6">
-													<select class="form-control" id="selectServer">
-														<option>Новосибирск</option>
-														<option>Москва</option>
+											<div class='form-group'>
+												<label for='selectServer' class='col-lg-3 control-label'>Сервер</label>
+												<div class='col-lg-6'>
+													<select class='form-control' id='selectServer'>
+														<option value='NSK'>Новосибирск</option>
+														<option value='MSK'>Москва</option>
 													</select>
 												</div>
 											</div>
-											<div class="form-group">
-												<label for="selectMap" class="col-lg-3 control-label">Карта</label>
-												<div class="col-lg-6">
-													<select class="form-control" id="selectMap">
-														<option>De_Dust2</option>
-														<option>De_Inferno</option>
-														<option>De_Train</option>
-														<option>De_Nuke</option>
-														<option>De_Tuscan</option>
+											<div class='form-group'>
+												<label for='selectMap' class='col-lg-3 control-label'>Карта</label>
+												<div class='col-lg-6'>
+													<select class='form-control' id='selectMap'>
+														<option>de_dust2</option>
+														<option>de_inferno</option>
+														<option>de_train</option>
+														<option>de_nuke</option>
+														<option>de_tuscan</option>
 													</select>
 												</div>
 											</div>
 
-											<div class="form-group">
-												<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
-												<div class="col-lg-6">
-													<select multiple class="form-control" id="selectPlayers">
+											<div class='form-group'>
+												<label for='selectPlayers' class='col-lg-3 control-label'>Тиммейты</label>
+												<div class='col-lg-6'>
+													<select multiple class='form-control' id='selectPlayers'>
 													{{#each myTeam.members}}
-														{{#if $neq username currentUser.profile.name}}
-															<option>{{username}}</option>
+														{{#if $eq username currentUser.profile.name}}
+															<option selected>{{username}}</option>
 														{{/if}}
 													{{else}}
 														<option>В команде никого нет</option>
 													{{/each}}
 													</select>
-													<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+													<span class='help-block'>Зажмите CTRL для выбора нескольких тиммейтов</span>
 												</div>
 											</div>
-											<div class="form-group">
-												<div class="col-lg-9 col-lg-offset-3">
-													<button class="btn btn-info" id="matchStart">Начать матч</a> 
+											<div class='form-group'>
+												<div class='col-lg-9 col-lg-offset-3'>
+													<button class='btn btn-info' id='matchStart'>Начать матч</a> 
 												</div>
 											</div>
 										</form>
@@ -158,44 +158,44 @@
 					{{/unless}}
 				 </div>
 				</div>
-				<div class="col-md-3 col-lg-4">
+				<div class='col-md-3 col-lg-4'>
 					{{> chat}}
 				</div>
 			</div>
 		</div>
 	{{else}}
-		<div class="container">
-			<div class="row">
-				<div class="jumbotron">
+		<div class='container'>
+			<div class='row'>
+				<div class='jumbotron'>
 					<h1>Добро пожаловать!</h1>
 					<p><strong>{{currentUser.profile.name}}</strong>, приветствуем тебя в системе ComeBack.pro!</p>
 					<p>Для того, чтобы начать участвовать в CW и турнирах тебе нужна команда:</p>
 					<p>
-						<button class="btn btn-lg btn-info" data-toggle="modal" data-target="#regTeamModal">Создать команду</button>
-						<a href="/teams" class="btn btn-lg btn-success">Вступить</a>
+						<button class='btn btn-lg btn-info' data-toggle='modal' data-target='#regTeamModal'>Создать команду</button>
+						<a href='/teams' class='btn btn-lg btn-success'>Вступить</a>
 					</p>
 				</div>
 			</div>
-			<div class="modal fade" id="regTeamModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Регистрация команды</h4>
+			<div class='modal fade' id='regTeamModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+				<div class='modal-dialog'>
+					<div class='modal-content'>
+						<div class='modal-header'>
+							<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+							<h4 class='modal-title' id='myModalLabel'>Регистрация команды</h4>
 						</div>
-						<div class="modal-body">
-							<form class="form-horizontal">
-								<div class="form-group">
-									<label for="teamName" class="col-lg-3 control-label">Название</label>
-									<div class="col-lg-9">
-										<input type="text" class="form-control" id="teamName" placeholder="Название команды">
+						<div class='modal-body'>
+							<form class='form-horizontal'>
+								<div class='form-group'>
+									<label for='teamName' class='col-lg-3 control-label'>Название</label>
+									<div class='col-lg-9'>
+										<input type='text' class='form-control' id='teamName' placeholder='Название команды'>
 									</div>
 								</div>
 							</form>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-							<button type="button" class="btn btn-primary" id="createTeamButton">Создать</button>
+						<div class='modal-footer'>
+							<button type='button' class='btn btn-default' data-dismiss='modal'>Отмена</button>
+							<button type='button' class='btn btn-primary' id='createTeamButton'>Создать</button>
 						</div>
 					</div>
 				</div>

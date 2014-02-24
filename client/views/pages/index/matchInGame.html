@@ -1,19 +1,35 @@
 <template name="matchInGame">
 	<td>{{id}}</td>
 	<td>
-		<span class="success">{{team1}}</span>
+		<span class="success">
+			{{#with team team1._id 'byTeamId'}}
+				{{name}}
+			{{/with}}
+		</span>
 		 vs 
-		<span class="danger">{{team2}}</span>
+		<span class="danger">
+			{{#with team team2._id 'byTeamId'}}
+				{{name}}
+			{{/with}}
+		</span>
 	</td>
 	<td>
-		<span class="success">{{scoreTeam1}}</span>
+		<span class="success">
+			{{#with team team1._id 'byTeamId'}}
+				{{score}}
+			{{/with}}
+		</span>
 		 : 
-		<span class="danger">{{scoreTeam2}}</span>
+		<span class="danger">
+			{{#with team team2._id 'byTeamId'}}
+				{{name}}
+			{{/with}}
+		</span>
 	</td>
 	<td>{{type}}</td>
 	<td>{{rate}}</td>
 	<td>{{map}}</td>
-	<td>{{status}}</td>
+	<td>{{serverGameStatus}}</td>
 	<td>
 		<a href="/matches/{{id}}" class="btn btn-link">
 			<span class="glyphicon glyphicon-chevron-right"></span>

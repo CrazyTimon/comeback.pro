@@ -23,6 +23,7 @@ Meteor.methods({
 			type: type, 
 			team1: {
 				_id: team._id,
+				name: team.name,
 				members: members
 			}, 
 			status: 'inSearch'
@@ -55,7 +56,8 @@ Meteor.methods({
 		Matches.update(matchId, {
 			$set: {
 				team2: {
-					_id: team2._id,
+					_id: team._id,
+					name: team.name,
 					members: members
 				},
 				status: 'inGame'
