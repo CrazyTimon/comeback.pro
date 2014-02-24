@@ -24,7 +24,6 @@ regTeam = function() {
 };
 
 Handlebars.registerHelper('team', function(arg, type, options) {
-	console.log('arg - ' + arg + ', type - ' + type + ', options: ' + options);
 	var Team;
 	if (!arg) {
 		return Teams.findOne({'members._id': Meteor.userId()})
@@ -58,6 +57,12 @@ Handlebars.registerHelper('myTeam', function() {
 	if (Team) return Team;
 });
 
+Handlebars.registerHelper('getTeamImage', function(teamName) {
+	var Team = Teams.findOne({name: teamName});
+	if (Team) {
+		return Team.image;
+	}
+});
 
 Handlebars.registerHelper('isMyTeam', function() {
 	return Teams.findOne({'members.username': Meteor.user().profile.name, name: Session.get('currentShowTeam')});

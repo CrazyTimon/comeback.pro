@@ -5,14 +5,10 @@
 				<div class='row'>
 					<div class="page-header">
 						<h1>
-							{{#with team team1._id 'byTeamId'}}
-								{{name}}
-							{{/with}}
+							{{team1.name}}
 							 vs
 							{{#if team2}}
-								{{#with team team2._id 'byTeamId'}}
-									{{name}}
-								{{/with}}
+								{{team2.name}}
 							{{else}}
 								?
 							{{/if}}
@@ -30,9 +26,7 @@
 					<div class="row">
 						<div class='col-md-4'>
 							<div class="center">
-								{{#with team team1._id 'byTeamId'}}
-									<img src="{{image}}" alt="{{name}}">
-								{{/with}}
+									<img src="{{getTeamImage team1.name}}" alt="{{team1.name}}">
 								<ul class="list-group">
 									{{#each team1.members}}
 										  <li class="list-group-item">{{this}}</li>
@@ -43,41 +37,39 @@
 						<div class='col-md-4 center'>
 							<h1>VS</h1>
 							<div class='btn-group-vertical'>
-								{{#if $eq _id matchId currentUser.profile.name}}
+								{{#if $eq _id myMatchId}}
 									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 								{{else}}
-									{{#with team '' ''}}
-										{{#if $eq team1._id this._id}}
-											<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
-											<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
-														</div>
-														<div class="modal-body">
-															<div class="form-group">
-																<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
-																<div class="col-lg-6">
-																	<select multiple class="form-control" id="selectPlayers">
-																	{{#each myTeam.members}}
-																		<option selected>{{username}}</option>
-																	{{/each}}
-																	</select>
-																	<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
-																</div>
+									{{#if $neq team1._id myTeam._id}}
+										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
+										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
+													</div>
+													<div class="modal-body">
+														<div class="form-group">
+															<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
+															<div class="col-lg-6">
+																<select multiple class="form-control" id="selectPlayers">
+																{{#each myTeam.members}}
+																	<option selected>{{username}}</option>
+																{{/each}}
+																</select>
+																<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
 															</div>
 														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-															<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
-														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+														<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
 													</div>
 												</div>
 											</div>
-										{{/if}}
-									{{/with}}
+										</div>
+									{{/if}}
 								{{/if}}
 							</div>
 						</div>

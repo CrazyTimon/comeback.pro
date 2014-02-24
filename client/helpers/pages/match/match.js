@@ -8,6 +8,12 @@ Handlebars.registerHelper('matchId', function(username) {
 	return match ? match._id : false;
 });
 
+Handlebars.registerHelper('myMatchId', function() {
+	var username = Meteor.user().profile.name;
+	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
+	return match ? match._id : false;
+});
+
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
 	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
 	var status = match ? match.status : false;
