@@ -29,6 +29,7 @@ Meteor.methods({
 		var username = Meteor.users.findOne({_id: this.userId}).profile.name;
 		var match = Matches.findOne({'team1.name': team.name}) ? Matches.findOne({'team2.name': team.name}) : Matches.findOne({'team2.name': team.name});
 		if (!match) throw new Meteor.Error(403, "Вы не начинали CW");
+		console.log(match);
 		Matches.remove({_id: match.id});
 	},
 
