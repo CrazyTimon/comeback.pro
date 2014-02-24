@@ -50,11 +50,6 @@ Meteor.methods({
 		var user = Meteor.users.findOne(this.userId);
 		var team = Teams.findOne({'members.username': user.profile.name});
 		var match = Matches.findOne(matchId);
-		return {
-			1: user,
-			2: team,
-			3: match
-		}
 		if (!(user.profile.name && team)) throw new Meteor.Error('Вы не в команде');
 		if (team._id === match.team1._id) throw new Meteor.Error('Невозможно начать CW против своей команды');
 		if (!(match.status === 'inSearch')) throw new Meteor.Error('Эта команда уже играет с другой командой');
@@ -67,7 +62,9 @@ Meteor.methods({
 				},
 				status: 'inGame'
 			}
+		}, function() {
+			var match = Matches.findOne(matchId);
+			Servers.start(match.id, match.server, match.map, match.type, match.team1._id, match.team2._id);
 		});
-		Servers.start(match.id, match.server, match.map, match.type, match.team1._id, match.team2._id);	
 	}
 });
