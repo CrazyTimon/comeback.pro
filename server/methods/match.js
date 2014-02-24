@@ -64,7 +64,7 @@ Meteor.methods({
 			}
 		}, function() {
 			var match = Matches.findOne(matchId);
-			Servers.start(match.id, match.server, match.map, match.type, match.team1._id, match.team2._id);
+			Servers.start(match._id, match.server, match.map, match.type, match.team1._id, match.team2._id);
 		});
 	}
 });
