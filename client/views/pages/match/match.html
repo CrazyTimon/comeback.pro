@@ -43,7 +43,7 @@
 						<div class='col-md-4 center'>
 							<h1>VS</h1>
 							<div class='btn-group-vertical'>
-								{{#if $eq _id matchId currentUser.profile.name 'byUserName'}}
+								{{#if $eq _id matchId currentUser.profile.name}}
 									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 								{{else}}
 									{{#if $neq team1._id team currentUser.profile.name 'byUserName'}}
@@ -91,7 +91,7 @@
 										{{/each}}
 									</ul>
 								{{else}}
-									{{#if $neq _id matchId currentUser.profile.name 'byUserName'}}
+									{{#if $neq _id matchId currentUser.profile.name}}
 										<a href="#" class="goCW" data-id="{{_id}}">
 											<img src="/img/plus.png" height="150px">
 										</a>
