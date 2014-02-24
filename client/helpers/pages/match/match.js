@@ -1,103 +1,57 @@
 Handlebars.registerHelper('myMatchStatus', function() {
-	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}) || Matches.findOne({membersTeam2: Meteor.user().profile.name})) {
-		var status = Matches.findOne({membersTeam1: Meteor.user().profile.name}).status || Matches.findOne({membersTeam2: Meteor.user().profile.name}).status;
-		if (status) {
-			if (status == "inGame") {
-				return "inGame";
-			}
-			if (status == "inSearch") {
-				return "inSearch";
-			}
-			if (status == "finished") {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
+	var user = Meteor.user().profile.name;
+	var myMatch = Matches.findOne({membersTeam1: user}) ? Matches.findOne({membersTeam1: user}) : Matches.findOne({membersTeam2: user});
+	var status = myMatch ? myMatch.status : false;
+	switch (status) {
+		case "inGame":
+			return "inGame";
+			break;
+		case "inSearch":
+			return "inSearch";
+			break;
+		case "finished":
+			return "finished";
+			break;
 	}
 });
 
 Handlebars.registerHelper('myMatchId', function() {
-	if (Matches.findOne({membersTeam1: Meteor.user().profile.name}) || Matches.findOne({membersTeam2: Meteor.user().profile.name})) {
-		var id = Matches.findOne({membersTeam1: Meteor.user().profile.name})._id || Matches.findOne({membersTeam2: Meteor.user().profile.name})._id;
-		if (id) {
-			return id;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+	var user = Meteor.user().profile.name;
+	var myMatch = Matches.findOne({membersTeam1: user}) ? Matches.findOne({membersTeam1: user}) : Matches.findOne({membersTeam2: user});
+	return myMatch ? myMatch._id : false;
 });
 
 Handlebars.registerHelper('matchStatus', function(username) {
-	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
-		var status =  Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
-		if (status) {
-			if (status == "inGame") {
-				return "inGame";
-			}
-			if (status == "inSearch") {
-				return "inSearch";
-			}
-			if (status == "finished") {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
+	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	var status = match ? match.status : false;
+	switch (status) {
+		case "inGame":
+			return "inGame";
+			break;
+		case "inSearch":
+			return "inSearch";
+			break;
+		case "finished":
+			return "finished";
+			break;
 	}
 });
 
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
-	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
-		var status =  Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
-		if (status) {
-			if (status == "inSearch") {
-				return "inSearch";
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	var status = match ? match.status : false;
+	return (status === 'inSearch') ? status : false;
 });
 
 Handlebars.registerHelper('matchStatusInGame', function(username) {
-	if ( Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
-		var status = Matches.findOne({membersTeam1: username}).status || Matches.findOne({membersTeam2: username}).status;
-		if (status) {
-			if (status == "inSearch") {
-				return "inGame";
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	var status = match ? match.status : false;
+	return (status === 'inGame') ? status : false;
 });
 
 Handlebars.registerHelper('matchId', function(username) {
-	if (Matches.findOne({membersTeam1: username}) || Matches.findOne({membersTeam2: username})) {
-		var id = Matches.findOne({membersTeam1: username})._id || Matches.findOne({membersTeam2: username})._id;
-		if (id) {
-			return id;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	return match ? match._id : false;
 });
 
 Template.match.events({
