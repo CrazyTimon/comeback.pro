@@ -22,7 +22,7 @@
 		 : 
 		<span class="danger">
 			{{#with team team2._id 'byTeamId'}}
-				{{name}}
+				{{score}}
 			{{/with}}
 		</span>
 	</td>
@@ -31,7 +31,7 @@
 	<td>{{map}}</td>
 	<td>{{serverGameStatus}}</td>
 	<td>
-		<a href="/matches/{{id}}" class="btn btn-link">
+		<a href="/matches/{{_id}}" class="btn btn-link">
 			<span class="glyphicon glyphicon-chevron-right"></span>
 		</a>
 	</td>
