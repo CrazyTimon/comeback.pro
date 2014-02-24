@@ -50,6 +50,9 @@ Meteor.methods({
 		var user = Meteor.users.findOne(this.userId);
 		var team = Teams.findOne({'members.username': user.profile.name});
 		var match = Matches.findOne(matchId);
+		console.log(user);
+		console.log(team)
+		console.log(match);
 		if (!(user.profile.name && team)) throw new Meteor.Error('Вы не в команде');
 		if (team._id === match.team1._id) throw new Meteor.Error('Невозможно начать CW против своей команды');
 		if (!(match.status === 'inSearch')) throw new Meteor.Error('Эта команда уже играет с другой командой');
