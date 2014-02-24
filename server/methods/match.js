@@ -27,9 +27,10 @@ Meteor.methods({
 		if (!this.userId) throw new Meteor.Error(403, "Доступ запрещен");
 		var team1 = Teams.findOne({"members._id": this.userId});
 		var username = Meteor.users.findOne({_id: this.userId}).profile.name;
-		if (!(Matches.findOne({'team1.name': team1.name, "membersTeam1": username}) || Matches.findOne({'team2.name': team1.name, "membersTeam2": username}))) throw new Meteor.Error(403, "Вы не начинали CW");
-		if (Matches.findOne({'team1.name': team1.name, "membersTeam1": username}).status === 'inGame') throw new Meteor.Error(403, "Игра уже началась");
-		Matches.remove({'team1.name': team1.name, "membersTeam1": username});
+		var match = Matches.findOne({'members1Team': username}) ? Matches.findOne({'members1Team': username}) : Matches.findOne({'members2Team': username});
+		if (!match) throw new Meteor.Error(403, "Вы не начинали CW");
+		if (match.status === 'inGame') throw new Meteor.Error(403, "Игра уже началась");
+		Matches.remove({_id: match.id});
 	},
 
 	goCW: function(matchId, membersTeam2) {
