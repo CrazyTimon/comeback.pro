@@ -46,7 +46,7 @@
 								{{#if $eq _id matchId currentUser.profile.name}}
 									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 								{{else}}
-									{{#if $neq team1._id team currentUser.profile.name 'byUserName'}}
+									{{#if $neq team1._id team currentUser.profile.name}}
 										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
 										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
@@ -82,7 +82,7 @@
 						<div class='col-md-4'>
 							<div class="center">
 								{{#if team2}}
-									{{#with team team2._id 'byTeamId'}}
+									{{#with team team2._id matchId currentUser.profile.name}}
 										<img src="{{image}}" height="150px">
 									{{/with}}
 									<ul class="list-group">
