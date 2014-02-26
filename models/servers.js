@@ -21,7 +21,7 @@ Meteor.startup(function() {
 				password = randomstring = Math.random().toString(36).slice(-8);
 			c.exec('cd ~/hlds/cw && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + '-pingboost 3 -master -secure', function() {
 				var rconC = new RCON(server.ip, port, server.password);
-				rconC.query('cw_start ' + team1Name + ' ' + team2Name);
+				rconC.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
 			});
 			Servers.update({name: serverName}, {$set: {lastUsedPort: port}}, function() {
 				Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
