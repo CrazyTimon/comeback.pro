@@ -8,9 +8,11 @@ Router.map(function () {
 				var Request = JSON.parse(this.params.request.replace(/'/g,'"'));
 				switch (this.params.typeRequest) {
 					case 'score':
-						Matches.update(Request.matchId, {
-							'team1.score': Request.score1,
-							'team2.score': Request.score2
+						Matches.update(Request.matchId, { $set: 
+							{
+								'team1.score': Request.score1,
+								'team2.score': Request.score2
+							}
 						});
 						break;
 					case 'event':
