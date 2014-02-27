@@ -61,7 +61,7 @@ Meteor.methods({
 					members: members
 				},
 				status: 'inGame',
-				gameStatus: 'startingServer'
+				gamestatus: 'startingServer'
 			}
 		}, function() {
 			var match = Matches.findOne(matchId);
