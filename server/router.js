@@ -46,6 +46,13 @@ Router.map(function () {
 									}
 								});
 								break;
+							case 'overtimeStarted':
+								Matches.update(Request.matchId, { 
+									$set: {
+										'gamestatus': 'overtime'
+									}
+								});
+								break;
 						}
 						break;
 				}

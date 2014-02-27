@@ -1,3 +1,49 @@
+Handlebars.registerHelper('matchGameStatus', function(username) {
+	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
+	if (match) {
+		switch (match.gameStatus) {
+			case 'warmup':
+				return 'Разминка'
+				break;
+			case 'knife':
+				return 'Ножевой раунд'
+				break;
+			case 'half1':
+				return 'Первая половина'
+				break;
+			case 'half2':
+				return 'Вторая половина'
+				break;
+			case 'overtime':
+				return 'Овертайм'
+				break;
+		}
+	}
+});
+
+Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
+	var match = Matches.findOne(matchId);
+	if (match) {
+		switch (match.gameStatus) {
+			case 'warmup':
+				return 'Разминка'
+				break;
+			case 'knife':
+				return 'Ножевой раунд'
+				break;
+			case 'half1':
+				return 'Первая половина'
+				break;
+			case 'half2':
+				return 'Вторая половина'
+				break;
+			case 'overtime':
+				return 'Овертайм'
+				break;
+		}
+	}
+});
+
 Handlebars.registerHelper('matchStatus', function(username) {
 	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
 	return match ? match.status : false;
