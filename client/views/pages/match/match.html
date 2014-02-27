@@ -39,13 +39,21 @@
 							<div class='btn-group-vertical'>
 								{{#if $eq _id myMatchId}}
 									{{#if gamestatus}}
-										<a href='steam://connect/{{ip}}:{{port}}/{{password}}' class='btn btn-info'>Подключиться к серверу</a>
+										{{#if $eq gamestatus 'startingServer'}}
+											<span class='text-muted'>Сервер запускается</span>
+										{{else}}
+											<a href='steam://connect/{{ip}}:{{port}}/{{password}}' class='btn btn-info'>Подключиться к серверу</a>
+										{{/if}}
 									{{else}}
 										<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 									{{/if}}
 								{{else}}
 									{{#if gamestatus}}
-										<a href='steam://connect/{{HltvIp}}:{{HltvPort}}' class='btn btn-info'>Смотреть HLTV</a>
+										{{#if $eq gamestatus 'startingServer'}}
+											<span class='text-muted'>Сервер запускается</span>
+										{{else}}
+											<a href='steam://connect/{{HltvIp}}:{{HltvPort}}' class='btn btn-info'>Смотреть HLTV</a>
+										{{/if}}
 									{{else}}
 										{{#if $neq team1._id myTeam._id}}
 											<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
