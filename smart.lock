@@ -14,7 +14,9 @@
       "steam": {},
       "accounts-steam": {},
       "profile-online": {},
-      "roles": {}
+      "roles": {},
+      "font-awesome": {},
+      "connection-banner": {}
     },
     "packages": {
       "npm": {
@@ -24,8 +26,8 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.6.2",
-        "commit": "ce56e58b45624dce992490f3a1c10f10d3948bae"
+        "tag": "v0.6.4",
+        "commit": "927bbaed1b87894fb6fb70807f74ff3a5bd89f29"
       },
       "bootstrap-3": {
         "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
@@ -39,8 +41,8 @@
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.1.15",
-        "commit": "baf79a3e5863acc3abfe2d0d62fb23b21fe880de"
+        "tag": "v0.1.16",
+        "commit": "e08aa22d76f25bb43e9d0f8bee3880c686f62b2b"
       },
       "streams": {
         "git": "https://github.com/arunoda/meteor-streams.git",
@@ -81,6 +83,16 @@
         "git": "https://github.com/alanning/meteor-roles.git",
         "tag": "v1.2.6",
         "commit": "f2a9058281f8f2fe028767841d7445aadd6893cf"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v4.0.3",
+        "commit": "61e9361384347547ae144f8228faa4deffda23db"
+      },
+      "connection-banner": {
+        "git": "https://github.com/nate-strauser/meteor-connection-banner.git",
+        "tag": "v0.1.1",
+        "commit": "111dd29669c2e39dda222bbc4f87fd8e66e286a8"
       },
       "nprogress": {
         "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",

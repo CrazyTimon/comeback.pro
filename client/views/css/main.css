@@ -1,3 +1,7 @@
+#meteor-connection-lost-banner {
+	z-index: 1001;
+}
+
 #navbar {
 	margin-bottom: 0px;
 }
