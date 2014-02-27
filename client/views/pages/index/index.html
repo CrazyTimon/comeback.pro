@@ -137,8 +137,10 @@
 													{{#each myTeam.members}}
 														{{#if $eq username currentUser.profile.name}}
 															<option selected>{{username}}</option>
+														{{else}}
+															<options>{{username}}</options>
 														{{/if}}
-														<options>{{username}}</options>
+
 													{{else}}
 														<option>В команде никого нет</option>
 													{{/each}}
