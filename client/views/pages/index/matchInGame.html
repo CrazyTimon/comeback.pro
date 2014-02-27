@@ -1,40 +1,42 @@
 <template name="matchInGame">
-	<td>{{_id}}</td>
-	<td>
-		<span class="text-success">
-			{{#with team team1._id 'byTeamId'}}
-				{{name}}
-			{{/with}}
-		</span>
-		 vs 
-		<span class="text-danger">
-			{{#with team team2._id 'byTeamId'}}
-				{{name}}
-			{{/with}}
-		</span>
-	</td>
-	<td>
-		<span class="text-success">
-			{{#with team team1._id 'byTeamId'}}
-				{{score}}
-			{{/with}}
-		</span>
-		 : 
-		<span class="text-danger">
-			{{#with team team2._id 'byTeamId'}}
-				{{score}}
-			{{/with}}
-		</span>
-	</td>
-	<td>{{type}}</td>
-	<td>{{rate}}</td>
-	<td>
-		<span class='label label-info'>{{map}}</span>
-	</td>
-	<td>{{matchGameStatusByMatchId _id}}</td>
-	<td>
-		<a href="/matches/{{_id}}" class="btn btn-default">
-			<span class="glyphicon glyphicon-chevron-right"></span>
-		</a>
-	</td>
+	<tr>
+		<td>{{_id}}</td>
+		<td>
+			<span class="text-info">
+				{{#with team team1._id 'byTeamId'}}
+					{{name}}
+				{{/with}}
+			</span>
+			 vs 
+			<span class="text-danger">
+				{{#with team team2._id 'byTeamId'}}
+					{{name}}
+				{{/with}}
+			</span>
+		</td>
+		<td>
+			<span class="text-info">
+				{{#with team team1._id 'byTeamId'}}
+					{{score}}
+				{{/with}}
+			</span>
+			 : 
+			<span class="text-danger">
+				{{#with team team2._id 'byTeamId'}}
+					{{score}}
+				{{/with}}
+			</span>
+		</td>
+		<td>{{type}}</td>
+		<td>{{rate}}</td>
+		<td>
+			<span class='label label-info'>{{map}}</span>
+		</td>
+		<td>{{matchGameStatusByMatchId _id}}</td>
+		<td>
+			<a href="/matches/{{_id}}" class="btn btn-default">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</td>
+	</tr>
 </template>
