@@ -3,8 +3,6 @@ Router.map(function () {
 		where: 'server',
 		path: '/server/:key/sendInfo/:typeRequest/:request/',
 		action: function () {
-			console.log(this.params)
-			console.log(Comeback.api.privateKey)
 			if (!this.params.key) this.response.writeHead(403);
 			if (this.params.key === Comeback.api.privateKey) {
 				var Request = JSON.parse(this.params.request.replace(/'/g,'"'));
