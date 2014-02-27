@@ -24,7 +24,7 @@ Handlebars.registerHelper('matchGameStatus', function(username) {
 Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
 	var match = Matches.findOne(matchId);
 	if (match) {
-		switch (match.gameStatus) {
+		switch (match.gamestatus) {
 			case 'warmup':
 				return 'Разминка'
 				break;
