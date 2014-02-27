@@ -16,26 +16,34 @@ Router.map(function () {
 					case 'event':
 						switch (Request.eventName) {
 							case 'serverOn':
-								Matches.update(Request.matchId, {
-									'gamestatus': 'warmup'
+								Matches.update(Request.matchId, { 
+									$set: {
+										'gamestatus': 'warmup'
+									}
 								});
 								break;
 							case 'serverOff':
 								Matches.remove(Request.matchId);
 								break;
 							case 'knifeStarted':
-								Matches.update(Request.matchId, {
-									'gamestatus': 'knife'
+								Matches.update(Request.matchId, { 
+									$set: {
+										'gamestatus': 'knife'
+									}
 								});
 								break;
 							case 'half1Started':
-								Matches.update(Request.matchId, {
-									'gamestatus': 'half1'
+								Matches.update(Request.matchId, { 
+									$set: {
+										'gamestatus': 'half1'
+									}
 								});
 								break;
 							case 'half2Started':
-								Matches.update(Request.matchId, {
-									'gamestatus': 'half2'
+								Matches.update(Request.matchId, { 
+									$set: {
+										'gamestatus': 'half2'
+									}
 								});
 								break;
 						}
