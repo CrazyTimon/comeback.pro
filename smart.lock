@@ -6,7 +6,6 @@
       "iron-router": {},
       "bootstrap-3": {},
       "auto-nprogress": {},
-      "fast-render": {},
       "streams": {},
       "handlebar-helpers": {},
       "bootstrap-slate": {},
@@ -38,11 +37,6 @@
         "git": "https://github.com/settinghead/meteor-auto-nprogress.git",
         "tag": "v0.2.7",
         "commit": "3fa87d5244e140cc5b49696585cd23b110c36467"
-      },
-      "fast-render": {
-        "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.1.16",
-        "commit": "e08aa22d76f25bb43e9d0f8bee3880c686f62b2b"
       },
       "streams": {
         "git": "https://github.com/arunoda/meteor-streams.git",
