@@ -13,6 +13,7 @@
     "profile-online": {},
     "roles": {},
     "font-awesome": {},
-    "connection-banner": {}
+    "connection-banner": {},
+    "fast-render": {}
   }
 }

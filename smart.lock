@@ -15,7 +15,8 @@
       "profile-online": {},
       "roles": {},
       "font-awesome": {},
-      "connection-banner": {}
+      "connection-banner": {},
+      "fast-render": {}
     },
     "packages": {
       "npm": {
@@ -87,6 +88,11 @@
         "git": "https://github.com/nate-strauser/meteor-connection-banner.git",
         "tag": "v0.1.1",
         "commit": "111dd29669c2e39dda222bbc4f87fd8e66e286a8"
+      },
+      "fast-render": {
+        "git": "https://github.com/arunoda/meteor-fast-render.git",
+        "tag": "v0.1.16",
+        "commit": "e08aa22d76f25bb43e9d0f8bee3880c686f62b2b"
       },
       "nprogress": {
         "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",
