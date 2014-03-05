@@ -149,6 +149,11 @@ Router.map(function() {
 				Meteor.subscribe('servers'),
 				Meteor.subscribe('news')
 			]
+		},
+		data: {
+			servers: function() {
+				return Servers.find();
+			}
 		}
 	});
 
