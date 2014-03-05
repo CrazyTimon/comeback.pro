@@ -1,9 +1,9 @@
 Meteor.methods({
-	startMatch: function(serverName, map, members) {
+	startMatch: function(serverName, game, map, members) {
 		if (!this.userId) throw new Meteor.Error('Доступ запрещен');
 		var team = Teams.findOne({'members._id': this.userId});
 		var user = Meteor.users.findOne(this.userId);
-		if (!(serverName && map && team && members)) throw new Meteor.Error('Нет аргументов');
+		if (!(serverName && game && map && team && members)) throw new Meteor.Error('Нет аргументов');
 		if (!inArray(user.profile.name, members)) throw new Meteor.Error('Вы не в списке участников');
 		if ((members.length > 5) || (members.length < 1)) throw new Meteor.Error('Вы выбрали неправильное количество тиммейтов');
 		if (Matches.findOne({'team1._id': team._id}) || Matches.findOne({'team2._id': team._id})) throw new Meteor.Error('Ваша команда уже в другой игре');
@@ -19,7 +19,8 @@ Meteor.methods({
 			server: {
 				name: serverName
 			}, 
-			map: map, 
+			map: map,
+			game: game,
 			type: type, 
 			team1: {
 				_id: team._id,
@@ -65,7 +66,7 @@ Meteor.methods({
 			}
 		}, function() {
 			var match = Matches.findOne(matchId);
-			Servers.start(match._id, match.server.name, match.map, match.type, match.team1._id, match.team2._id);
+			Servers.start(match._id, match.server.name, match.game, match.map, match.type, match.team1._id, match.team2._id);
 		});
 	}
 });

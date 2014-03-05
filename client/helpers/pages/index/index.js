@@ -35,7 +35,7 @@ Template.index.events({
 		}
 	},
 	'click #matchStart': function(e) {
-		Meteor.call('startMatch', $("#selectServer").val(), $("#selectMap").val(), $("#selectPlayers").val(), function(error, result) {
+		Meteor.call('startMatch', $("#selectServer").val(), $("#selectGame").val(), $("#selectMap").val(), $("#selectPlayers").val(), function(error, result) {
 			error ? alert(error) : Meteor.go("/matches/" + result)
 		});
 	}

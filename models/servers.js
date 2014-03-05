@@ -17,7 +17,7 @@ Meteor.startup(function() {
 				return;
 			});
 
-			Servers[server.name].start = function(matchId, serverName, map, type, team1_id, team2_id) {
+			Servers[server.name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
 				if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
 				if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
 				var server = Servers.findOne({name: serverName}),
@@ -25,12 +25,22 @@ Meteor.startup(function() {
 					team2Name = Teams.findOne(team2_id).name,
 					maxPlayers = parseInt(type[0], 10) + parseInt(type[2], 10) + 1 ,
 					port = server.lastUsedPort + 1 ,
-					password = randomstring = Math.random().toString(36).slice(-8);
-
-				Servers[server.name].sshConnection.exec('cd ~/hlds/cw && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
-					var rconConnection = new RCON(server.ip, port, server.password);
-					rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
-				});
+					password = randomstring = Math.random().toString(36).slice(-8),
+					path = server[game].config.path;
+				switch (game) {
+					case 'cs16': {
+						Servers[server.name].sshConnection.exec('cd ' + path + '&& screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
+							var rconConnection = new RCON(server.ip, port, server.password);
+							rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
+						});
+					}
+					case 'csgo': {
+						// Future...
+					}
+					case 'css': {
+						// Future...
+					}
+				}
 
 				Servers.update({name: serverName}, {$set: {lastUsedPort: port}}, function() {
 					Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
