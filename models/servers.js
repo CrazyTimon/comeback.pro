@@ -48,5 +48,38 @@ Meteor.startup(function() {
 			};
 			console.log("Server " + server.name + " started!")
 		});
+
+		Servers.add = function(name, ip, login, password, path, country, city) {
+			if (!(name && ip && login && password && path && country && city)) throw new Meteor.Error(400, 'Bad request');
+			if (Servers.find({name: name}) || Servers.find({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
+			
+			var sshConnection = new ssh2();
+
+			sshConnection.connect({
+				host: ip,
+				port: 22,
+				username: login,
+				password: password
+			});
+
+			sshConnection.on('error', function(err) {
+				throw new Meteor.Error('Ошибка соединения с сервером');
+				return;
+			});
+
+			Servers.insert({
+				name: name,
+				ip: ip,
+				login: login,
+				password: password,
+				location: {
+					contry: country,
+					city: city
+				},
+				lastUsedPort: 27015
+			}, function() {
+				
+			});
+		};
 	}
 });
