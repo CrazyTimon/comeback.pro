@@ -22,11 +22,7 @@
 		<td>{{type}}</td>
 		<td>{{map}}</td>
 		<td>
-			{{#if $eq server.name 'NSK'}}
-				<span class='label label-primary'>NSK</span>
-			{{else}}
-				<span class='label label-primary'>MSK</span>
-			{{/if}}
+			<span class='label label-primary'>{{server.name}}</span>
 		</td>
 		<td>
 			<a href='/matches/{{_id}}' class='btn btn-default'>
