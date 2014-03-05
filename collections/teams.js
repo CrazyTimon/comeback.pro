@@ -15,7 +15,7 @@ if (Meteor.isServer) {
 
 	Meteor.publish("teams", function() {
 		if (this.userId) {
-			return Matches.find();
+			return Teams.find();
 		} else {
 			return null;
 		}

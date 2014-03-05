@@ -42,11 +42,11 @@ Handlebars.registerHelper('team', function(arg, type, options) {
 			if (Team) return Team;
 			break;
 		case 'byUserName':
-			Team = Teams.findOne({'members.name': arg});
+			Team = Teams.findOne({'members.username': arg});
 			if (Team) return Team;
 			break;
 		default:
-			Team = Teams.findOne({'members.name': arg});
+			Team = Teams.findOne({'members.username': arg});
 			if (Team) return Team;
 	}
 	return;

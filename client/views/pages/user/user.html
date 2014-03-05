@@ -3,8 +3,8 @@
 		<div class="container">
 			<div class="page-header">
 					<h1>
-						{{#if team profile.name}}
-							{{team profile.name}} | 
+						{{#if team profile.name 'byUserName'}}
+							{{team.name profile.name 'byUserName'}} | 
 						{{/if}}
 						{{profile.name}} 
 						<small>{{profile.firstname}} {{profile.lastname}}</small>

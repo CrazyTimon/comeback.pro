@@ -83,11 +83,13 @@
 			{{/if}}
 		</td>
 		<td>
-			{{#if teamName profile.name}}
-				<a href="teams/{{teamName profile.name}}">{{teamName profile.name}}</a>
-			{{else}}
-				<span class="text-primary">Не в команде</span>
-			{{/if}}
+			{{#with team profile.name 'byUserName'}}
+				{{#if name}}
+					<a href="teams/{{name}}">{{name}}</a>
+				{{else}}
+					<span class="text-primary">Не в команде</span>
+				{{/if}}
+			{{/with}}
 		</td>
 		<td>
 			{{#if profile.skill}}
