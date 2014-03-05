@@ -4,7 +4,8 @@
 			<div class="page-header">
 				<h1>Управление</h1>
 			</div>
-			{{> adminPage}}
+			<div class="col-md-9">{{> adminPage}}</div>
+			<aside class="col-md-3">{{> adminStatistics}}</aside>
 		</div>
 	{{else}}
 		{{> forbidden}}
