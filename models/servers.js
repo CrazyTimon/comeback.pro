@@ -12,6 +12,11 @@ Meteor.startup(function() {
 				password: Servers.findOne({name: server.name}).password
 			});
 
+			Servers[server.name].sshConnection.on('error', function(err) {
+				console.log('Connection :: error :: ' + err);
+				return;
+			});
+
 			Servers[server.name].start = function(matchId, serverName, map, type, team1_id, team2_id) {
 				if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
 				if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
