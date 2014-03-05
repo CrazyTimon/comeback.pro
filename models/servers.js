@@ -29,7 +29,7 @@ Meteor.startup(function() {
 					path = server[game].config.path;
 				switch (game) {
 					case 'cs16': {
-						Servers[server.name].sshConnection.exec('cd ' + path + '&& screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
+						Servers[server.name].sshConnection.exec('cd ' + path + ' && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
 							var rconConnection = new RCON(server.ip, port, server.password);
 							rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
 						});

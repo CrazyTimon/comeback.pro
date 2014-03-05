@@ -15,13 +15,17 @@ if (Meteor.isServer) {
 
 	Meteor.publish('servers', function() {
 		if (this.userId) {
-			return Servers.find({}, {
-				fields: {
-					'ip': 1, 
-					'location': 1, 
-					'name': 1
-				}
-			});
+			if (Roles.userIsInRole(userId, ['admin'])) {
+				return Servers.find();
+			} else {
+				return Servers.find({}, {
+					fields: {
+						'ip': 1, 
+						'location': 1, 
+						'name': 1
+					}
+				});
+			}
 		} else {
 			return null;
 		}

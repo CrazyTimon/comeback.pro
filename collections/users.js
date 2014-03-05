@@ -13,13 +13,17 @@ if (Meteor.isServer) {
 
 	Meteor.publish('users', function() {
 		if (this.userId) {
-			return Meteor.users.find({}, {
-				fields: {
-					'profile': 1,
-					'roles': 1,
-					'services.steam': 1
-				}
-			});
+			if (Roles.userIsInRole(userId, ['admin'])) {
+				return Meteor.users.find();
+			} else {
+				return Meteor.users.find({}, {
+					fields: {
+						'profile': 1,
+						'roles': 1,
+						'services.steam': 1
+					}
+				});
+			}
 		} else {
 			return null;
 		}

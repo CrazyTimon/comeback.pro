@@ -1,0 +1,15 @@
+<template name='serverList'>
+	<tr>
+		<td>{{name}}</td>
+		<td>{{ip}}</td>
+		<td>{{login}}</td>
+		<td>{{password}}</td>
+		<td>{{location.city}}, {{location.country}}</td>
+		<td>{{lastUsedPort}}</td>
+		<td>
+			<a href='/admin/servers/{{_id}}' class='btn btn-default'>
+				<span class='glyphicon glyphicon-chevron'></span>
+			</a>
+		</td>
+	</tr>
+</template>
