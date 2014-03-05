@@ -46,7 +46,6 @@ Meteor.startup(function() {
 					Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
 				});
 			};
-			console.log("Server " + server.name + " started!")
 		});
 
 		Servers.add = function(name, ip, login, password, path, country, city) {
@@ -55,30 +54,30 @@ Meteor.startup(function() {
 			
 			var sshConnection = new ssh2();
 
+			sshConnection.on('error', function(err) {
+				throw new Meteor.Error('Ошибка соединения с сервером');
+				return false;
+			});
+			
+			sshConnection.on('ready', function() {
+				Servers.insert({
+					name: name,
+					ip: ip,
+					login: login,
+					password: password,
+					location: {
+						country: country,
+						city: city
+					},
+					lastUsedPort: 27015
+				});
+			});
+			
 			sshConnection.connect({
 				host: ip,
 				port: 22,
 				username: login,
 				password: password
-			});
-
-			sshConnection.on('error', function(err) {
-				throw new Meteor.Error('Ошибка соединения с сервером');
-				return;
-			});
-
-			Servers.insert({
-				name: name,
-				ip: ip,
-				login: login,
-				password: password,
-				location: {
-					contry: country,
-					city: city
-				},
-				lastUsedPort: 27015
-			}, function() {
-
 			});
 		};
 	}
