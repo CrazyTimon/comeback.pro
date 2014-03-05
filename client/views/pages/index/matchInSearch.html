@@ -1,6 +1,17 @@
 <template name='matchInSearch'>
 	<tr>
 		<td>
+			{{#if $eq game 'cs16'}}
+				<span class='label label-info'>CS 1.6</span>
+			{{else}}
+				{{#if $eq game 'csgo'}}
+					<span class='label label-info'>CS:GO</span>
+				{{else}}
+					<span class='label label-info'>CS:S</span>
+				{{/if}}
+			{{/if}}
+		</td>
+		<td>
 			{{#with team team1._id "byTeamId"}}
 				<a href='/teams/{{name}}/'>
 					<img height='40px' src='{{image}}'>
@@ -12,6 +23,13 @@
 		</td>
 		<td>{{type}}</td>
 		<td>{{map}}</td>
+		<td>
+			{{#if $eq server.name 'NSK'}}
+				<span class='label label-default'>NSK</span>
+			{{else}}
+				<span class='label label-default'>MSK</span>
+			{{/if}}
+		</td>
 		<td>
 			<a href='/matches/{{_id}}' class='btn btn-default'>
 				<span class='glyphicon glyphicon-chevron-right'></span>
