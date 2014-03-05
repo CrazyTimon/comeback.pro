@@ -51,7 +51,7 @@ Meteor.startup(function() {
 
 		Servers.add = function(name, ip, login, password, path, country, city) {
 			if (!(name && ip && login && password && path && country && city)) throw new Meteor.Error(400, 'Bad request');
-			if (Servers.find({name: name}) || Servers.find({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
+			if (Servers.findOne({name: name}) || Servers.findOne({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
 			
 			var sshConnection = new ssh2();
 
@@ -78,7 +78,7 @@ Meteor.startup(function() {
 				},
 				lastUsedPort: 27015
 			}, function() {
-				
+
 			});
 		};
 	}
