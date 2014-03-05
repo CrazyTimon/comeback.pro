@@ -1,0 +1,11 @@
+<template name='admin'>
+	{{#if isInRole 'admin'}}
+		<div class="container">
+			<div class="page-header">
+				<h1>Управление</h1>
+			</div>
+		</div>
+	{{else}}
+		{{> forbidden}}
+	{{/if}}
+</template>

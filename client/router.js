@@ -138,6 +138,20 @@ Router.map(function() {
 		}
 	});
 
+	this.route('admin',{
+		path: '/admin',
+		template: 'admin',
+		waitOn: function() {
+			return [
+				Meteor.subscribe('users'),
+				Meteor.subscribe('teams'),
+				Meteor.subscribe('matches'),
+				Meteor.subscribe('servers'),
+				Meteor.subscribe('news')
+			]
+		}
+	});
+
 	this.route('about', {
 		path: '/about',
 		template: 'about'

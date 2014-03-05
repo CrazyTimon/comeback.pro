@@ -3,7 +3,6 @@ Meteor.startup(function() {
 		ssh2 = Meteor.require('ssh2');
 
 		_.each(Servers.find().fetch(), function(server) {
-			console.log(server);
 			Servers[server.name] = {};
 			Servers[server.name].sshConnection = new ssh2();
 			Servers[server.name].sshConnection.connect({
