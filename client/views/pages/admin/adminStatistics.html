@@ -1,4 +1,8 @@
 <template name='adminStatistics'>
+	{{> addServer}}
+</template>
+
+<template name='addServer'>
 	<div class="panel panel-default">
 		<div class="panel-heading">Добавить сервер</div>
 		<div class="panel-body">
@@ -13,6 +17,9 @@
 			</div>
 			<div class="form-group">
 				<input type="password" id="input-server-password" placeholder="Пароль" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="text" id="input-server-path" placeholder="Папка для серверов" class="form-control">
 			</div>
 			<div class="form-group">
 				<input type="text" id="input-server-country" placeholder="Страна" class="form-control">

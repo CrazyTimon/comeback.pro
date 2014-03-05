@@ -5,6 +5,7 @@ Template.admin.events({
 			$('input-server-ip').val(), 
 			$('input-server-login').val(), 
 			$('input-server-password').val(), 
+			$('input-server-path').val(), 
 			$('input-server-country').val(), 
 			$('input-server-city').val(), 
 			function(error, result) {
@@ -15,6 +16,7 @@ Template.admin.events({
 					$('input-server-ip').val(''); 
 					$('input-server-login').val('');
 					$('input-server-password').val('');
+					$('input-server-path').val('');
 					$('input-server-country').val('');
 					$('input-server-city').val('');
 				}
