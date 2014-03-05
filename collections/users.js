@@ -21,8 +21,7 @@ if (Meteor.isServer) {
 				}
 			});
 		} else {
-			this.stop();
-			return;
+			return null;
 		}
 	});
 }

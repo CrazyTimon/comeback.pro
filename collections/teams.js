@@ -14,6 +14,10 @@ if (Meteor.isServer) {
 	});
 
 	Meteor.publish("teams", function() {
-		return Teams.find();
+		if (this.userId) {
+			return Matches.find();
+		} else {
+			return null;
+		}
 	});
 }

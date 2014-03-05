@@ -17,8 +17,7 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			return News.find();
 		} else {
-			this.stop();
-			return;
+			return null;
 		}
 	});
 }
