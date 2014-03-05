@@ -1,7 +1,7 @@
 Meteor.startup(function() {
 	if (Meteor.isServer) {
 		ssh2 = Meteor.require('ssh2');
-
+		Fiber = Meteor.require('fibers');
 		_.each(Servers.find().fetch(), function(server) {
 			Servers[server.name] = {};
 			Servers[server.name].sshConnection = new ssh2();
