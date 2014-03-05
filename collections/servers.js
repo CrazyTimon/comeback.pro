@@ -15,7 +15,7 @@ if (Meteor.isServer) {
 
 	Meteor.publish('servers', function() {
 		if (this.userId) {
-			if (Roles.userIsInRole(userId, ['admin'])) {
+			if (Roles.userIsInRole(this.userId, ['admin'])) {
 				return Servers.find();
 			} else {
 				return Servers.find({}, {

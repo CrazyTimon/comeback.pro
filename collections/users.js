@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 
 	Meteor.publish('users', function() {
 		if (this.userId) {
-			if (Roles.userIsInRole(userId, ['admin'])) {
+			if (Roles.userIsInRole(this.userId, ['admin'])) {
 				return Meteor.users.find();
 			} else {
 				return Meteor.users.find({}, {
