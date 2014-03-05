@@ -6,8 +6,16 @@
 			<td>{{login}}</td>
 			<td>{{password}}</td>
 			<td>{{location.city}}, {{location.country}}</td>
+			<td>{{os}}</td>
 			<td>{{lastUsedPort}}</td>
+			<td>{{status}}</td>
 			<td>
+				<button class='btn btn-danger' id='removeServer'>
+					<span class='glyphicon glyphicon-remove'></span>
+				</button>
+				<button class='btn btn-warning' id='rebootServer'>
+					<span class='glyphicon glyphicon-refresh'></span>
+				</button>
 				<a href='/admin/servers/{{_id}}' class='btn btn-default'>
 					<span class='glyphicon glyphicon-chevron-right'></span>
 				</a>
