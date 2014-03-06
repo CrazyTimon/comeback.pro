@@ -8,7 +8,7 @@ Meteor.startup(function() {
 				host: server.ip,
 				port: 22,
 				username: server.login,
-				password: server..password
+				password: server.password
 			});
 
 			Servers[server.name].sshConnection.on('error', function(err) {
