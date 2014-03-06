@@ -54,7 +54,7 @@ Meteor.startup(function() {
 			if (Servers.findOne({name: name}) || Servers.findOne({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
 			var sshConnection = new ssh2();
 
-			var err = Async.runSync(function(done) {
+			var result = Async.runSync(function(done) {
 				sshConnection.on('error', function(err) {
 					done(null, err);
 				});
@@ -66,10 +66,8 @@ Meteor.startup(function() {
 					password: password
 				});
 			});
-			console.log(1);
-			if (err) {
-				console.log(err);
-				if (err.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
+			if (result) {
+				if (result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			}
 			
 			/*sshConnection.on('ready', function() {
