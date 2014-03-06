@@ -67,6 +67,9 @@ Meteor.startup(function() {
 				});
 			});
 			if (result) {
+				console.log(result);
+				console.log(result.code);
+				console.log(error);
 				if (result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			}
 			
