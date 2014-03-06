@@ -54,7 +54,7 @@ Meteor.startup(function() {
 			if (Servers.findOne({name: name}) || Servers.findOne({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
 			var sshConnection = new ssh2();
 
-			var result = Async.runSync(function(done) {
+			var res = Async.runSync(function(done) {
 				sshConnection.on('error', function(err) {
 					done(null, err);
 				});
@@ -66,12 +66,8 @@ Meteor.startup(function() {
 					password: password
 				});
 			});
-			if (result) {
-				console.log(result);
-				console.log(result.code);
-				console.log(error);
-				if (result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
-			}
+
+			if (res.result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			
 			/*sshConnection.on('ready', function() {
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
