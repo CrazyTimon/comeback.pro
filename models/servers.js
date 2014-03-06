@@ -58,7 +58,7 @@ Meteor.startup(function() {
 				sshConnection.on('error', function(err) {
 					done(null, err);
 				});
-
+				sshConnection.on('ready', done(null, true));
 				sshConnection.connect({
 					host: ip,
 					port: 22,
@@ -68,7 +68,7 @@ Meteor.startup(function() {
 			});
 			console.log(res);
 			if (res.result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
-			
+			if (res.result.level === 'authentication') throw new Meteor.Error('Ошибка авторизации');
 			/*sshConnection.on('ready', function() {
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
 						if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
