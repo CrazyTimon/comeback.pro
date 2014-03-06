@@ -45,6 +45,9 @@ Meteor.startup(function() {
 						Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
 					});
 				};
+				Servers[server.name].reboot = function() {
+					Servers[server.name].sshConnection.exec('reboot');
+				};
 			});
 		});
 
@@ -68,7 +71,7 @@ Meteor.startup(function() {
 					password: password
 				});
 			});
-			console.log(res);
+
 			if (res.result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			if (res.result.level === 'authentication') throw new Meteor.Error('Ошибка авторизации');
 
@@ -88,6 +91,7 @@ Meteor.startup(function() {
 					lastUsedPort: 27015
 				}, function() {
 					Servers[name] = {};
+					Servers[name].sshConnection = sshConnection;
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
 						if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
 						if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
