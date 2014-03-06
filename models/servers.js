@@ -87,6 +87,7 @@ Meteor.startup(function() {
 					},
 					lastUsedPort: 27015
 				}, function() {
+					Servers[name] = {};
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
 						if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
 						if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
