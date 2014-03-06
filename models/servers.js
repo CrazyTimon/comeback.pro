@@ -1,15 +1,14 @@
 Meteor.startup(function() {
 	if (Meteor.isServer) {
 		ssh2 = Meteor.require('ssh2');
-		Fiber = Meteor.require('fibers');
 		_.each(Servers.find().fetch(), function(server) {
 			Servers[server.name] = {};
 			Servers[server.name].sshConnection = new ssh2();
 			Servers[server.name].sshConnection.connect({
-				host: Servers.findOne({name: server.name}).ip,
+				host: server.ip,
 				port: 22,
-				username: Servers.findOne({name: server.name}).login,
-				password: Servers.findOne({name: server.name}).password
+				username: server.login,
+				password: server..password
 			});
 
 			Servers[server.name].sshConnection.on('error', function(err) {
