@@ -79,13 +79,7 @@ Meteor.startup(function() {
 					login: login,
 					password: password,
 					config: {
-						$addToSet: {
-							games: {
-								cs16: {
-									path: path
-								}
-							}
-						}
+						path: path
 					},
 					location: {
 						country: country,
@@ -102,10 +96,10 @@ Meteor.startup(function() {
 							maxPlayers = parseInt(type[0], 10) + parseInt(type[2], 10) + 1 ,
 							port = server.lastUsedPort + 1 ,
 							password = randomstring = Math.random().toString(36).slice(-8),
-							path = server.config.games[game].path;
+							path = server.config.path;
 						switch (game) {
 							case 'cs16': {
-								Servers[server.name].sshConnection.exec('cd ' + path + ' && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
+								Servers[server.name].sshConnection.exec('cd ' + path + ' && cd ' + game + ' && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
 									var rconConnection = new RCON(server.ip, port, server.password);
 									rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
 								});
