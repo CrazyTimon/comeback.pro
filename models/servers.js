@@ -71,48 +71,59 @@ Meteor.startup(function() {
 			console.log(res);
 			if (res.result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			if (res.result.level === 'authentication') throw new Meteor.Error('Ошибка авторизации');
-			/*sshConnection.on('ready', function() {
-					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
-						if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
-						if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
-						var server = Servers.findOne({name: serverName}),
-							team1Name = Teams.findOne(team1_id).name,
-							team2Name = Teams.findOne(team2_id).name,
-							maxPlayers = parseInt(type[0], 10) + parseInt(type[2], 10) + 1 ,
-							port = server.lastUsedPort + 1 ,
-							password = randomstring = Math.random().toString(36).slice(-8),
-							path = server[game].config.path;
-						switch (game) {
-							case 'cs16': {
-								Servers[server.name].sshConnection.exec('cd ' + path + ' && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
-									var rconConnection = new RCON(server.ip, port, server.password);
-									rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
-								});
-							}
-							case 'csgo': {
-								// Future...
-							}
-							case 'css': {
-								// Future...
-							}
-						}
-						Servers.update({name: serverName}, {$set: {lastUsedPort: port}}, function() {
-							Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
-						});
-					};
 
+			if (res.result === true && res.error === null) {
 					Servers.insert({
 						name: name,
 						ip: ip,
 						login: login,
 						password: password,
+						config: {
+							$addToSet: {
+								games: {
+									cs16: {
+										path: path
+									}
+								}
+							}
+						},
 						location: {
 							country: country,
 							city: city
 						},
 						lastUsedPort: 27015
+					}, function() {
+						Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
+							if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
+							if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
+							var server = Servers.findOne({name: serverName}),
+								team1Name = Teams.findOne(team1_id).name,
+								team2Name = Teams.findOne(team2_id).name,
+								maxPlayers = parseInt(type[0], 10) + parseInt(type[2], 10) + 1 ,
+								port = server.lastUsedPort + 1 ,
+								password = randomstring = Math.random().toString(36).slice(-8),
+								path = server.config.games[game].path;
+							switch (game) {
+								case 'cs16': {
+									Servers[server.name].sshConnection.exec('cd ' + path + ' && screen -AdmS comeback.cw-' + matchId + ' ./hlds_run -game cstrike -port ' + port + ' +maxplayers ' + maxPlayers + ' +map ' + map + ' sv_password ' + password + ' -pingboost 3 -master -secure', function() {
+										var rconConnection = new RCON(server.ip, port, server.password);
+										rconConnection.query('cw_start ' + team1Name + ' ' + team2Name + ' ' + matchId);
+									});
+								}
+								case 'csgo': {
+									// Future...
+								}
+								case 'css': {
+									// Future...
+								}
+							}
+							Servers.update({name: serverName}, {$set: {lastUsedPort: port}}, function() {
+								Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
+							});
+						};
 					});
-			});*/
+				});
+			}
 		};
 	}
 });
