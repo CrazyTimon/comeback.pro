@@ -66,7 +66,7 @@ Meteor.startup(function() {
 					password: password
 				});
 			});
-
+			console.log(res);
 			if (res.result.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
 			
 			/*sshConnection.on('ready', function() {
