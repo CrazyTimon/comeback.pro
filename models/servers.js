@@ -58,7 +58,9 @@ Meteor.startup(function() {
 				sshConnection.on('error', function(err) {
 					done(null, err);
 				});
-				sshConnection.on('ready', done(null, true));
+				sshConnection.on('ready', function() {
+					done(null, true);
+				});
 				sshConnection.connect({
 					host: ip,
 					port: 22,
