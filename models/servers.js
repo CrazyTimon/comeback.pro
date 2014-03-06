@@ -120,6 +120,9 @@ Meteor.startup(function() {
 							Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
 						});
 					};
+					Servers[name].reboot = function() {
+						Servers[server.name].sshConnection.exec('reboot');
+					};
 				});
 			}
 		};
