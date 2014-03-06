@@ -28,6 +28,9 @@ Router.map(function() {
 			},
 			matchesPlayed: function() {
 				return Matches.find({status: 'finished'});
+			},
+			servers: function() {
+				return Servers.find();
 			}
 		}
 	});

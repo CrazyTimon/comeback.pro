@@ -9,7 +9,7 @@ Meteor.methods({
 		if (!this.userId || !Roles.userIsInRole(this.userId, ['admin'])) throw new Meteor.Error(403, 'Permission denied');
 		if (!serverId) throw new Meteor.Error(400, 'Bad request');
 		check(serverId, String);
-		var serverName = Servers.find(serverId);
+		var serverName = Servers.find(serverId).name;
 		Servers.remove(serverId, function() {
 			delete Servers[serverName];
 		});
