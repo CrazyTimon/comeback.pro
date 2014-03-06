@@ -54,14 +54,22 @@ Meteor.startup(function() {
 			
 			var sshConnection = new ssh2();
 
-			sshConnection.on('error', function(err) {
-				new Fiber(function() {
-					Servers.remove({name: name});
-				}).run();
+			var err = Async.runSync(function(done) {
+				sshConnection.on('error', function(err) {
+					done(null, err);
+				});
+
+				sshConnection.connect({
+					host: ip,
+					port: 22,
+					username: login,
+					password: password
+				});
 			});
+
+			if (err) console.log("MyError: " + err);
 			
-			sshConnection.on('ready', function() {
-				new Fiber(function() {
+			/*sshConnection.on('ready', function() {
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
 						if (!(matchId && serverName && map && type && team1_id && team2_id)) throw new Meteor.Error('Нет аргументов');
 						if (!Servers.findOne({name: serverName})) throw new Meteor.Error('Сервер не найден');
@@ -102,15 +110,7 @@ Meteor.startup(function() {
 						},
 						lastUsedPort: 27015
 					});
-				}).run();
 			});
-
-			sshConnection.connect({
-				host: ip,
-				port: 22,
-				username: login,
-				password: password
-			});
-		};
+		};*/
 	}
 });
