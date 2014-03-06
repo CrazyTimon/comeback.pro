@@ -56,6 +56,7 @@ Meteor.startup(function() {
 
 			var err = Async.runSync(function(done) {
 				sshConnection.on('error', function(err) {
+					console.log(err);
 					done(null, err);
 				});
 
