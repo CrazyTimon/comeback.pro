@@ -110,7 +110,7 @@ Meteor.startup(function() {
 						},
 						lastUsedPort: 27015
 					});
-			});
-		};*/
+			});*/
+		};
 	}
 });
