@@ -68,7 +68,9 @@ Meteor.startup(function() {
 				});
 			});
 
-			if (err) console.log("MyError: " + err);
+			if (err) {
+				if (err.code === 'EINVAL') throw new Meteor.Error('Невозможно подключиться к данному серверу');
+			}
 			
 			/*sshConnection.on('ready', function() {
 					Servers[name].start = function(matchId, serverName, game, map, type, team1_id, team2_id) {
