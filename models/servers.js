@@ -50,8 +50,8 @@ Meteor.startup(function() {
 
 		Servers.add = function(name, ip, login, password, path, country, city) {
 			if (!(name && ip && login && password && path && country && city)) throw new Meteor.Error(400, 'Bad request');
+			check([name, ip, login, password, path, country, city], [String]);
 			if (Servers.findOne({name: name}) || Servers.findOne({ip: ip})) throw new Meteor.Error(400, 'Такой сервер уже существует');
-			
 			var sshConnection = new ssh2();
 
 			var err = Async.runSync(function(done) {

@@ -1,6 +1,7 @@
 Meteor.methods({
 	'createTeam': function(teamName) {
 		if (!teamName) throw new Meteor.Error(403, 'Нет аргументов');
+		check(teamName, String);
 		if (Teams.findOne({name: teamName})) throw new Meteor.Error(403, 'Команда ' + teamName + ' уже существует.');
 		if (Meteor.users.findOne({_id: this.userId}).profile.team) throw new Meteor.Error(403, 'Вы уже в команде');
 		var username = Meteor.users.findOne({_id: this.userId}).profile.name;
@@ -26,6 +27,7 @@ Meteor.methods({
 
 	'joinToTeam': function(teamName) {
 		if (!teamName) throw new Meteor.Error(403, 'Нет аргументов');
+		check(teamName, String);
 		var username = Meteor.users.findOne(this.userId).profile.name;
 		if (Teams.findOne({'members.username': username})) throw new Meteor.Error(403, 'Вы уже в команде');
 		var teamId = Teams.findOne({name: teamName})._id;
@@ -48,6 +50,7 @@ Meteor.methods({
 
 	'acceptFromTeam': function(username) {
 		if (!username) throw new Meteor.Error(403, 'Нет аргументов');
+		check(username, String);
 		var captain = Meteor.users.findOne({_id: this.userId});
 		if (!Teams.findOne({captain: captain.profile.name})) throw new Meteor.Error(403, 'Вы не капитан данной команды');
 		if (!Teams.findOne({captain: captain.profile.name, 'members.username': username})) throw new Meteor.Error(403, 'Данный пользователь не вступал в команду');
@@ -68,6 +71,7 @@ Meteor.methods({
 
 	'declineFromTeam': function(username) {
 		if (!username) throw new Meteor.Error(403, 'Нет аргументов');
+		check(username, String);
 		var captain = Meteor.users.findOne({_id: this.userId});
 		if (!Teams.findOne({captain: captain.profile.name})) throw new Meteor.Error(403, 'Вы не капитан данной команды');
 		if (!Teams.findOne({captain: captain.profile.name, 'members.username': username})) throw new Meteor.Error(403, 'Данный пользователь не вступал в команду');
@@ -86,6 +90,7 @@ Meteor.methods({
 	},
 	'kickFromTeam': function(username) {
 		if (!username) throw new Meteor.Error(403, 'Нет аргументов');
+		check(username, String);
 		var captain = Meteor.users.findOne({_id: this.userId});
 		var teamName = Teams.findOne({captain: captain.profile.name}).name;
 		if (!Teams.findOne({captain: captain.profile.name})) throw new Meteor.Error(403, 'Вы не капитан данной команды');
@@ -129,6 +134,7 @@ Meteor.methods({
 	},
 	'makeCaptain': function(username) {
 		if (!username) throw new Meteor.Error(403, 'Нет аргументов');
+		check(username, String);
 		var captain = Meteor.users.findOne({_id: this.userId});
 		var teamName = Teams.findOne({captain: captain.profile.name}).name;
 		if (!Teams.findOne({captain: captain.profile.name})) throw new Meteor.Error(403, 'Вы не капитан данной команды');

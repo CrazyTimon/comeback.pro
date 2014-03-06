@@ -4,6 +4,8 @@ Meteor.methods({
 		var team = Teams.findOne({'members._id': this.userId});
 		var user = Meteor.users.findOne(this.userId);
 		if (!(serverName && game && map && team && members)) throw new Meteor.Error('Нет аргументов');
+		check([serverName, game, map], [String]);
+		check(members, Array);
 		if (!inArray(user.profile.name, members)) throw new Meteor.Error('Вы не в списке участников');
 		if ((members.length > 5) || (members.length < 1)) throw new Meteor.Error('Вы выбрали неправильное количество тиммейтов');
 		if (Matches.findOne({'team1._id': team._id}) || Matches.findOne({'team2._id': team._id})) throw new Meteor.Error('Ваша команда уже в другой игре');
@@ -47,7 +49,10 @@ Meteor.methods({
 	},
 
 	goCW: function(matchId, members) {
-		if (!matchId) throw new Meteor.Error('Матч не найден');
+		if (!(matchId && members)) throw new Meteor.Error('Нет аргументов');
+		check(matchId, String);
+		check(members, Array);
+		if (!Mathes.find(matchId)) throw new Meteor.Error('Матч не найден');
 		var user = Meteor.users.findOne(this.userId);
 		var team = Teams.findOne({'members.username': user.profile.name});
 		var match = Matches.findOne(matchId);
