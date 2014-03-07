@@ -52,7 +52,7 @@ Meteor.methods({
 		if (!(matchId && members)) throw new Meteor.Error('Нет аргументов');
 		check(matchId, String);
 		check(members, Array);
-		if (!Mathes.find(matchId)) throw new Meteor.Error('Матч не найден');
+		if (!Matches.find(matchId)) throw new Meteor.Error('Матч не найден');
 		var user = Meteor.users.findOne(this.userId);
 		var team = Teams.findOne({'members.username': user.profile.name});
 		var match = Matches.findOne(matchId);
@@ -71,7 +71,7 @@ Meteor.methods({
 			}
 		}, function() {
 			var match = Matches.findOne(matchId);
-			Servers.start(match._id, match.server.name, match.game, match.map, match.type, match.team1._id, match.team2._id);
+			Servers[match.server.name].start(match._id, match.game, match.map, match.type, match.team1._id, match.team2._id);
 		});
 	}
 });
