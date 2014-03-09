@@ -54,7 +54,6 @@ Router.map(function () {
 								}
 							});
 							break;
-						case ''
 					}
 					break;
 			}
