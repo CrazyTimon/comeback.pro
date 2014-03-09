@@ -46,6 +46,7 @@
 										{{#if $eq gamestatus 'startingServer'}}
 											<span class='text-muted'>Сервер запускается</span>
 										{{else}}
+											<span class='label label-primary'>connect {{ip}}:{{port}};password {{password}}</span>
 											<a href='steam://connect/{{ip}}:{{port}}/{{password}}' class='btn btn-info'>Подключиться к серверу</a>
 										{{/if}}
 									{{else}}
