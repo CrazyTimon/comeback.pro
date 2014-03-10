@@ -1,3 +1,13 @@
+Handlebars.registerHelper('winTeam', function(team1, team2) {
+	if (team1.score > team2.score) {
+		return team1.name;
+	} else if (team1.score < team2.score) {
+		return team2.name;
+	} else {
+		return "Ничья";
+	}
+});
+
 Handlebars.registerHelper('matchGameStatus', function(username) {
 	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
 	if (match) {
@@ -24,6 +34,7 @@ Handlebars.registerHelper('matchGameStatus', function(username) {
 Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
 	var match = Matches.findOne(matchId);
 	if (match) {
+		if (match.status !== 'inGame') return;
 		switch (match.gamestatus) {
 			case 'warmup':
 				return 'Разминка'
