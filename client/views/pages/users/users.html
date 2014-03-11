@@ -59,9 +59,11 @@
 							<span class="label label-warning">В поиске</span>
 						</a>
 					{{else}}
-						<a href="/matches/{{matchId profile.name}}">
-							<span class="label label-info">В игре</span>
-						</a>
+						{{#if matchStatusInGame profile.name}}
+							<a href="/matches/{{matchId profile.name}}">
+								<span class="label label-info">В игре</span>
+							</a>
+						{{/if}}
 					{{/if}}
 				{{else}}
 					<span class="label label-success">Онлайн</span>
