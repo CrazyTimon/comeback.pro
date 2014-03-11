@@ -129,11 +129,13 @@ Template.match.events({
 		}
 	},
 	'click .goCW': function (e) {
+		$('#goCWModal').modal('hide');
 		var target = e.currentTarget;
 		if(!target) return;
 		var members = $('#selectPlayers').val();
+		var matchId = target.getAttribute('data-id');
 		if(target.hasAttribute('data-id')) {
-			Meteor.call('goCW', target.getAttribute('data-id'), members, function(error, result) {
+			Meteor.call('goCW', matchId, members, function(error, result) {
 				if (error) alert(error);
 			});
 		}
