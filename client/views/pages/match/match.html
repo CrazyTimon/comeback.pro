@@ -29,79 +29,85 @@
 						<br>
 						<b class='text-success'>Сервер:</b> <i>{{server.name}} ({{server.location.city}}, {{server.location.country}})</i>
 						<br>
-						{{#if $eq _id myMatchId}}
-							{{#if gamestatus}}
-								{{#if $neq gamestatus 'startingServer'}}
-									<b class='text-success'>IP</b> 
-									<i>
-										<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}'>
-											connect {{server.ip}}:{{server.port}};password {{server.password}}
-										</a>
-									</i>
-								{{/if}}
-							{{/if}}
-						{{else}}
-							{{#if gamestatus}}
-								{{#if $eq gamestatus 'startingServer'}}
-										<i class='text-success'>HLTV:</i>
-										<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}'>
-											connect {{server.hltv.ip}}:{{server.hltv.port}}
-										</a>
-								{{/if}}
-							{{/if}}
-						{{/if}}
-						<b class='text-success'>Статус:</b> <i>{{getGameStatus gamestatus}}</i>
-						<hr>
-						<div class='center'>
+						{{#unless $eq status 'finished'}}
 							{{#if $eq _id myMatchId}}
 								{{#if gamestatus}}
-									{{#if $eq gamestatus 'startingServer'}}
-										<a class='btn btn-info' disabled>Запуск сервера...</a>
-									{{else}}
-										<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}' class='btn btn-info'>Подключиться к серверу</a>
+									{{#if $neq gamestatus 'startingServer'}}
+										<b class='text-success'>IP</b> 
+										<i>
+											<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}'>
+												connect {{server.ip}}:{{server.port}};password {{server.password}}
+											</a>
+										</i>
 									{{/if}}
-								{{else}}
-									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 								{{/if}}
 							{{else}}
 								{{#if gamestatus}}
 									{{#if $eq gamestatus 'startingServer'}}
-										<span class='text-muted'>Сервер запускается</span>
+											<i class='text-success'>HLTV:</i>
+											<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}'>
+												connect {{server.hltv.ip}}:{{server.hltv.port}}
+											</a>
+									{{/if}}
+								{{/if}}
+							{{/if}}
+							<b class='text-success'>Статус:</b> <i>{{getGameStatus gamestatus}}</i>
+						{{/unless}}
+						<hr>
+						<div class='center'>
+							{{#unless $eq status 'finished'}}
+								{{#if $eq _id myMatchId}}
+									{{#if gamestatus}}
+										{{#if $eq gamestatus 'startingServer'}}
+											<a class='btn btn-info' disabled>Запуск сервера...</a>
+										{{else}}
+											<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}' class='btn btn-info'>Подключиться к серверу</a>
+										{{/if}}
 									{{else}}
-										<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}' class='btn btn-info'>Смотреть HLTV</a>
+										<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
 									{{/if}}
 								{{else}}
-									{{#if $neq team1._id myTeam._id}}
-										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
-										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
-													</div>
-													<div class="modal-body">
-														<div class="form-group">
-															<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
-															<div class="col-lg-6">
-																<select multiple class="form-control" id="selectPlayers">
-																{{#each myTeam.members}}
-																	<option selected>{{username}}</option>
-																{{/each}}
-																</select>
-																<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+									{{#if gamestatus}}
+										{{#if $eq gamestatus 'startingServer'}}
+											<span class='text-muted'>Сервер запускается</span>
+										{{else}}
+											<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}' class='btn btn-info'>Смотреть HLTV</a>
+										{{/if}}
+									{{else}}
+										{{#if $neq team1._id myTeam._id}}
+											<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
+											<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
+														</div>
+														<div class="modal-body">
+															<div class="form-group">
+																<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
+																<div class="col-lg-6">
+																	<select multiple class="form-control" id="selectPlayers">
+																	{{#each myTeam.members}}
+																		<option selected>{{username}}</option>
+																	{{/each}}
+																	</select>
+																	<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
+																</div>
 															</div>
 														</div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-														<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+															<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
+										{{/if}}
 									{{/if}}
-								{{/if}}
+								{{else}}
+									<a class='btn btn-info' href='#'>Скачать демку</a>
+								{{/unless}}
 							{{/if}}
 						</div>
 					</div>
