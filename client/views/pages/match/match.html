@@ -1,132 +1,144 @@
 <template name="match">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8">
-				<div class='row'>
-					<div class="page-header">
-						<h1>
-							<span class='text-info'>{{team1.name}}</span>
-							 vs
-							{{#if team2}}
-								<span class='text-danger'>{{team2.name}}</span>
-							{{else}}
-								?
-							{{/if}}
-							<small class="pull-right">
-								<span class="label label-default text-muted">{{type}}</span>
-								|
-								<span class="label label-default">{{map}}</span>
-								|
-								<span class="label label-default">{{server.name}}</span>
-							</small>
-						</h1>
-					</div>
-				</div>
+			<div class="col-md-9">
 				<div class="row">
-					<div class="row">
-						<div class='col-md-4'>
-							<div class="center">
-									<img src="{{getTeamImage team1.name}}" alt="{{team1.name}}">
-								<ul class="list-group">
-									{{#each team1.members}}
-										  <li class="list-group-item">{{this}}</li>
-									{{/each}}
-								</ul>
-							</div>
-						</div>
-						<div class='col-md-4 center'>
-							<p>
-								<h1 class='text-info' style='display:inline'>{{team1.score}}</h1>
-								:
-								<h1 class='text-danger' style='display:inline'>{{team2.score}}</h1>
-							</p>
-							<div class='btn-group-vertical'>
-								{{#if $eq _id myMatchId}}
-									{{#if gamestatus}}
-										{{#if $eq gamestatus 'startingServer'}}
-											<span class='text-muted'>Сервер запускается</span>
-										{{else}}
-											
-											<a href='steam://connect/{{ip}}:{{port}}/{{password}}' class='btn btn-info'>Подключиться к серверу</a>
-										{{/if}}
+					<div class='col-md-4 center'>
+						<ul class="list-group">
+							<li class='list-group-item list-group-item-info'>
+								<h3 style='margin: 0'>{{team1.name}}</h3>
+							</li>
+							<li class='list-group-item'>
+								<img src="{{getTeamImage team1.name}}" alt="{{team1.name}}" height='120px'>
+							</li>
+							{{#each team1.members}}
+								  <a class="list-group-item" href='/users/{{this}}'>{{this}}</a>
+							{{/each}}
+						</ul>
+					</div>
+					<div class='col-md-4'>
+						<h1 class='text-center'>
+							<span class='text-info'>{{team1.score}}</span>
+							 : 
+							<span class='text-danger'>{{team2.score}}</span>
+						</h1>
+						<hr>
+						<b class='text-success'>Карта:</b> <i>{{map}}</i>
+						<br>
+						<b class='text-success'>Тип:</b> <i>{{type}}</i>
+						<br>
+						<b class='text-success'>Сервер:</b> <i>{{server.name}} ({{server.location.city}}, {{server.location.country}})</i>
+						<br>
+						{{#if $eq _id myMatchId}}
+							{{#if gamestatus}}
+								{{#if $neq gamestatus 'startingServer'}}
+									<b class='text-success'>IP</b> 
+									<i>
+										<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}'>
+											connect {{server.ip}}:{{server.port}};password {{server.password}}
+										</a>
+									</i>
+								{{/if}}
+							{{/if}}
+						{{else}}
+							{{#if gamestatus}}
+								{{#if $eq gamestatus 'startingServer'}}
+										<i class='text-success'>HLTV:</i>
+										<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}'>
+											connect {{server.hltv.ip}}:{{server.hltv.port}}
+										</a>
+								{{/if}}
+							{{/if}}
+						{{/if}}
+						<b class='text-success'>Статус:</b> <i>{{gamestatus}}</i>
+						<hr>
+						<div class='center'>
+							{{#if $eq _id myMatchId}}
+								{{#if gamestatus}}
+									{{#if $eq gamestatus 'startingServer'}}
+										<a class='btn btn-info' disabled>Запуск сервера...</a>
 									{{else}}
-										<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
+										<a href='steam://connect/{{server.ip}}:{{server.port}}/{{server.password}}' class='btn btn-info'>Подключиться к серверу</a>
 									{{/if}}
 								{{else}}
-									{{#if gamestatus}}
-										{{#if $eq gamestatus 'startingServer'}}
-											<span class='text-muted'>Сервер запускается</span>
-										{{else}}
-											<a href='steam://connect/{{HltvIp}}:{{HltvPort}}' class='btn btn-info'>Смотреть HLTV</a>
-										{{/if}}
+									<button class="btn btn-danger" id="abortMatch">Отменить игру</button>
+								{{/if}}
+							{{else}}
+								{{#if gamestatus}}
+									{{#if $eq gamestatus 'startingServer'}}
+										<span class='text-muted'>Сервер запускается</span>
 									{{else}}
-										{{#if $neq team1._id myTeam._id}}
-											<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
-											<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
-														</div>
-														<div class="modal-body">
-															<div class="form-group">
-																<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
-																<div class="col-lg-6">
-																	<select multiple class="form-control" id="selectPlayers">
-																	{{#each myTeam.members}}
-																		<option selected>{{username}}</option>
-																	{{/each}}
-																	</select>
-																	<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
-																</div>
+										<a href='steam://connect/{{server.hltv.ip}}:{{server.hltv.port}}' class='btn btn-info'>Смотреть HLTV</a>
+									{{/if}}
+								{{else}}
+									{{#if $neq team1._id myTeam._id}}
+										<button class="btn btn-success" data-id="{{_id}}" data-toggle="modal" data-target="#goCWModal">Сыграть CW</button>
+										<div class="modal fade" id="goCWModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="myModalLabel">CW против {{team1.name}}</h4>
+													</div>
+													<div class="modal-body">
+														<div class="form-group">
+															<label for="selectPlayers" class="col-lg-3 control-label">Тиммейты</label>
+															<div class="col-lg-6">
+																<select multiple class="form-control" id="selectPlayers">
+																{{#each myTeam.members}}
+																	<option selected>{{username}}</option>
+																{{/each}}
+																</select>
+																<span class="help-block">Зажмите CTRL для выбора нескольких тиммейтов</span>
 															</div>
 														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-															<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
-														</div>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+														<button type="button" class="btn btn-primary goCW" data-id={{_id}}>Начать матч</button>
 													</div>
 												</div>
 											</div>
-										{{/if}}
+										</div>
 									{{/if}}
 								{{/if}}
-							</div>
-						</div>
-						<div class='col-md-4'>
-							<div class="center">
-								{{#if team2}}
-										<img src="{{getTeamImage team2.name}}" height="150px">
-									<ul class="list-group">
-										{{#each team2.members}}
-											  <li class="list-group-item">{{this}}</li>
-										{{/each}}
-									</ul>
-								{{else}}
-									{{#if $neq _id myMatchId}}
-										<a href="#" class="goCW" data-id="{{_id}}">
-											<img src="/img/plus.png" height="150px">
-										</a>
-									{{else}}
-										<img src="/img/plus.png" height="150px">
-									{{/if}}
-								{{/if}}
-							</div>
+							{{/if}}
 						</div>
 					</div>
-					<hr>
-					<div class="row">
-						<div class="col-md-offset-4 col-md-4 center">
-							<h3>Сервер</h3>
-							<p>
-								<span class='label label-primary'>connect {{ip}}:{{port}};password {{password}}</span>
-							</p>
-						</div>
+					<div class='col-md-4 center'>
+						{{#if team2.name}}
+							<ul class="list-group">
+								<li class='list-group-item list-group-item-danger'>
+									<h3 style='margin: 0'>{{team2.name}}</h3>
+								</li>
+								<li class='list-group-item'>
+									<img src="{{getTeamImage team2.name}}" height="120px">
+								</li>
+								{{#each team2.members}}
+									<a href='/users/{{this}}' class="list-group-item">{{this}}</a>
+								{{/each}}
+							</ul>
+						{{else}}
+								<ul class="list-group">
+									<li class='list-group-item list-group-item-danger'>
+										<h3 style='margin: 0'>Team B</h3>
+									</li>
+									<li class='list-group-item'>
+										{{#if $neq _id myMatchId}}
+											<a href="#" class="goCW" data-id="{{_id}}">
+												<img src="/img/plus.png" height="120px">
+											</a>
+										{{else}}
+											<img src="/img/plus.png" height="120px">
+										{{/if}}
+									</li>
+								</ul>	
+						{{/if}}
 					</div>
 				</div>
+				<hr>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				{{> chat}}
 			</div>
 		</div>

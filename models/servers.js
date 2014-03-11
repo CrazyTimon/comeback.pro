@@ -40,7 +40,7 @@ Meteor.startup(function() {
 						}
 					}
 					Servers.update({name: server.name}, {$set: {lastUsedPort: port}}, function() {
-						Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
+						Matches.update({_id: matchId}, {$set: {'server.ip': server.ip, 'server.port': port, 'server.password': password}});
 					});
 				};
 				Servers[server.name].reboot = function() {
@@ -114,7 +114,7 @@ Meteor.startup(function() {
 							}
 						}
 						Servers.update({name: serverName}, {$set: {lastUsedPort: port}}, function() {
-							Matches.update({_id: matchId}, {$set: {ip: server.ip, port: port, password: password}});
+							Matches.update({_id: matchId}, {$set: {'server.ip': server.ip, 'server.port': port, 'server.password': password}});
 						});
 					};
 					Servers[name].reboot = function() {

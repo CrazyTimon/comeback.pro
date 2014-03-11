@@ -8,7 +8,6 @@
       "auto-nprogress": {},
       "streams": {},
       "handlebar-helpers": {},
-      "bootstrap-slate": {},
       "rcon": {},
       "steam": {},
       "accounts-steam": {},
@@ -50,11 +49,6 @@
         "tag": "v0.0.9",
         "commit": "71e94c99462b8801a34c5363510758b6ff5f5ac7"
       },
-      "bootstrap-slate": {
-        "git": "https://github.com/mickeyren/meteor-bootstrap-slate.git",
-        "tag": "v0.0.1",
-        "commit": "03e01f40019b63517c922b882821d3eb66b31140"
-      },
       "rcon": {
         "git": "https://github.com/Multiply/meteor-rcon.git",
         "tag": "v0.1.0",
@@ -87,13 +81,13 @@
       },
       "connection-banner": {
         "git": "https://github.com/nate-strauser/meteor-connection-banner.git",
-        "tag": "v0.1.1",
-        "commit": "111dd29669c2e39dda222bbc4f87fd8e66e286a8"
+        "tag": "v0.2.1",
+        "commit": "aeb866f75e626262a97e9c913ac7dd5425e5c118"
       },
       "fast-render": {
         "git": "https://github.com/arunoda/meteor-fast-render.git",
-        "tag": "v0.1.16",
-        "commit": "e08aa22d76f25bb43e9d0f8bee3880c686f62b2b"
+        "tag": "v0.1.18",
+        "commit": "dbfc8178594e5f696a39541278aac5dd25d458a0"
       },
       "server-eval": {
         "git": "https://github.com/gandev-de/meteor-server-eval.git",

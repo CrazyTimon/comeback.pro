@@ -2,10 +2,15 @@ winTeam = function(team1, team2) {
 	return (team1.score > team2.score) ? team1.name : (team1.score < team2.score) ? team2.name : 'Ничья'
 };
 
-Handlebars.registerHelper('winTeam', winTeam(team1, team2));
+Handlebars.registerHelper('winTeam', function(team1, team2) {
+	if (team1 && team2) {
+		winTeam(team1, team2);
+	}
+});
 
 Handlebars.registerHelper('matchGameStatus', function(username) {
-	if (Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]})) {
+	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
+	if (match) {
 		switch (match.gameStatus) {
 			case 'warmup':
 				return 'Разминка'
@@ -27,7 +32,8 @@ Handlebars.registerHelper('matchGameStatus', function(username) {
 });
 
 Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
-	if (Matches.findOne(matchId)) {
+	var match = Matches.findOne(matchId);
+	if (match) {
 		if (match.status !== 'inGame') return;
 		switch (match.gamestatus) {
 			case 'warmup':
@@ -52,8 +58,8 @@ Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
 Handlebars.registerHelper('matchStatus', function(username) {
 	var match = Matches.findOne({
 		$or: [
-			{'team1.members': "Maxpain177"},
-			{'team2.members': "Maxpain177"}
+			{'team1.members': username},
+			{'team2.members': username}
 		],
 		$or: [
 			{status: 'inGame'},
@@ -77,13 +83,13 @@ Handlebars.registerHelper('myMatchId', function() {
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
 	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	var status = match ? match.status : false;
-	return (status === 'inSearch') ? status : false;
+	return status === 'inSearch'
 });
 
 Handlebars.registerHelper('matchStatusInGame', function(username) {
 	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	var status = match ? match.status : false;
-	return (status === 'inGame') ? status : false;
+	return status === 'inGame'
 });
 
 Template.match.events({

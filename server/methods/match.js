@@ -16,10 +16,13 @@ Meteor.methods({
 				throw new Meteor.Error('Пользователь ' + member + ' не найден');
 			}
 		}
+		var server = Servers.findOne({'name': serverName});
+		if (!server) throw new Meteor.Error('Такого сервера не существует');
 		var type = members.length + 'x' + members.length;
 		var matchId = Matches.insert({
 			server: {
-				name: serverName
+				name: server.name,
+				location: server.location
 			}, 
 			map: map,
 			game: game,
@@ -27,8 +30,12 @@ Meteor.methods({
 			team1: {
 				_id: team._id,
 				name: team.name,
-				members: members
+				members: members,
+				score: 0
 			}, 
+			team2: {
+				score: 0
+			},
 			status: 'inSearch'
 		});
 		for (var i = 0; i < members.length; i++) {
@@ -41,11 +48,10 @@ Meteor.methods({
 		if (!this.userId) throw new Meteor.Error('Доступ запрещен');
 		var team = Teams.findOne({'members._id': this.userId});
 		if (!team) throw new Meteor.Meteor.Error('Вы не в команде');
-		var match = Matches.findOne({'team1._id': team._id}) ? Matches.findOne({'team1._id': team._id}) : Matches.findOne({'team2._id': team._id});
+		var match = Matches.findOne({$or: [{'team1._id': team._id}, {'team2._id': team._id}]});
 		if (!match) throw new Meteor.Error('Вы не начинали CW');
-		if ((match.status === 'inGame') || (match.status === 'finished')) throw new Meteor.Error('Этот матч уже идёт');
+		if ((match.status === 'inGame') || (match.status === 'finished')) throw new Meteor.Error('Этот матч уже идёт/закончен');
 		Matches.remove(match._id);
-		return;
 	},
 
 	goCW: function(matchId, members) {
@@ -64,10 +70,11 @@ Meteor.methods({
 				team2: {
 					_id: team._id,
 					name: team.name,
-					members: members
+					members: members,
+					score: 0
 				},
 				status: 'inGame',
-				gamestatus: 'startingServer'
+				gamestatus: 'startingServer',
 			}
 		}, function() {
 			var match = Matches.findOne(matchId);

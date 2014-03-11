@@ -1,6 +1,6 @@
 <template name="_loginButtonsLoggedOutSingleLoginButton">
   <div class="login-text-and-button">
-    <div class="login-button single-login-button col-sm-12 {{#if configured}}btn btn-info {{else}}configure-button btn btn-danger{{/if}} btn-lg" id="login-buttons-{{name}}">
+    <div class="login-button single-login-button {{#if configured}}btn btn-info {{else}}configure-button btn btn-danger{{/if}} btn-lg" id="login-buttons-{{name}}">
       <div class="login-image" id="login-buttons-image-{{name}}"></div>
       {{#if configured}}
         <span class="text-besides-image sign-in-text-{{name}}">Войти через {{capitalizedName}}</span>
