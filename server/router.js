@@ -54,13 +54,12 @@ Router.map(function () {
 								}
 							});
 							break;
-						case 'gameEnd': {
+						case 'gameEnd':
 							Matches.update(Request.matchId, {
 								$set: {
 									'status': 'finished'
 								}
 							});
-						}
 					}
 					break;
 			}
