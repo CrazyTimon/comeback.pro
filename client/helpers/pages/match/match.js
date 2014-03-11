@@ -1,3 +1,26 @@
+Handlebars.registerHelper('getGameStatus', function(status) {
+	switch (status) {
+		case 'warmup':
+			return 'Разминка'
+			break;
+		case 'knife':
+			return 'Ножевой раунд'
+			break;
+		case 'half1':
+			return 'Первая половина'
+			break;
+		case 'half2':
+			return 'Вторая половина'
+			break;
+		case 'overtime':
+			return 'Овертайм'
+			break;
+		case 'startingServer':
+			return 'Запуск сервера'
+			break;
+	}
+});
+
 winTeam = function(team1, team2) {
 	return (team1.score > team2.score) ? team1.name : (team1.score < team2.score) ? team2.name : 'Ничья'
 };
@@ -11,7 +34,7 @@ Handlebars.registerHelper('winTeam', function(team1, team2) {
 Handlebars.registerHelper('matchGameStatus', function(username) {
 	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	if (match) {
-		switch (match.gameStatus) {
+		switch (match.gamestatus) {
 			case 'warmup':
 				return 'Разминка'
 				break;
