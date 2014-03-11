@@ -52,7 +52,9 @@
 								{{/if}}
 							{{/if}}
 							<b class='text-success'>Статус:</b> <i>{{getGameStatus gamestatus}}</i>
-						{{/unless}}
+						{{else}}
+							<b class='text-success'>Победитель:</b> <i class='text-danger'>{{winTeam team1 team2}}</i>
+						{{/if}}
 						<hr>
 						<div class='center'>
 							{{#unless $eq status 'finished'}}
