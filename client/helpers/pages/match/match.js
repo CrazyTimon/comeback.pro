@@ -21,13 +21,9 @@ Handlebars.registerHelper('getGameStatus', function(status) {
 	}
 });
 
-winTeam = function(team1, team2) {
-	return (team1.score > team2.score) ? team1.name : (team1.score < team2.score) ? team2.name : 'Ничья'
-};
-
 Handlebars.registerHelper('winTeam', function(team1, team2) {
 	if (team1 && team2) {
-		winTeam(team1, team2);
+		return (team1.score > team2.score) ? team1.name : (team1.score < team2.score) ? team2.name : 'Ничья'
 	}
 });
 
