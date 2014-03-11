@@ -57,13 +57,18 @@ Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
 
 Handlebars.registerHelper('matchStatus', function(username) {
 	var match = Matches.findOne({
-		$or: [
-			{'team1.members': username},
-			{'team2.members': username}
-		],
-		$or: [
-			{status: 'inGame'},
-			{status: 'inSearch'}
+		$and: [
+			{
+				$or: [
+					{'team1.members': username},
+					{'team2.members': username}
+				]
+			}, {
+				$or: [
+					{status: 'inGame'},
+					{status: 'inSearch'}
+				]
+			}
 		]
 	});
 	if (match) {
