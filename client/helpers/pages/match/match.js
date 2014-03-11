@@ -66,7 +66,11 @@ Handlebars.registerHelper('matchStatus', function(username) {
 			{status: 'inSearch'}
 		]
 	});
-	return match ? (match.status !== 'finished') ? match.status : false : false;
+	if (match) {
+		if (match.status !== 'finished') {
+			return match.status;
+		}
+	}
 });
 
 Handlebars.registerHelper('matchId', function(username) {
