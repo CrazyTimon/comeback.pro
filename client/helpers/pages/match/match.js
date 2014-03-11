@@ -85,7 +85,7 @@ Handlebars.registerHelper('myMatchId', function() {
 });
 
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
-	if (Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]}, status: 'inSearch'})) return true;
+	if (Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}], status: 'inSearch'})) return true;
 });
 
 Handlebars.registerHelper('matchStatusInGame', function(username) {
