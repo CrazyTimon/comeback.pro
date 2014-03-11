@@ -1,16 +1,11 @@
-Handlebars.registerHelper('winTeam', function(team1, team2) {
-	if (team1.score > team2.score) {
-		return team1.name;
-	} else if (team1.score < team2.score) {
-		return team2.name;
-	} else {
-		return "Ничья";
-	}
-});
+winTeam = function(team1, team2) {
+	return (team1.score > team2.score) ? team1.name : (team1.score < team2.score) ? team2.name : 'Ничья'
+};
+
+Handlebars.registerHelper('winTeam', winTeam(team1, team2));
 
 Handlebars.registerHelper('matchGameStatus', function(username) {
-	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
-	if (match) {
+	if (Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]})) {
 		switch (match.gameStatus) {
 			case 'warmup':
 				return 'Разминка'
@@ -32,8 +27,7 @@ Handlebars.registerHelper('matchGameStatus', function(username) {
 });
 
 Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
-	var match = Matches.findOne(matchId);
-	if (match) {
+	if (Matches.findOne(matchId)) {
 		if (match.status !== 'inGame') return;
 		switch (match.gamestatus) {
 			case 'warmup':
@@ -56,29 +50,38 @@ Handlebars.registerHelper('matchGameStatusByMatchId', function(matchId) {
 });
 
 Handlebars.registerHelper('matchStatus', function(username) {
-	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
-	return match ? (match.status === 'inGame' || match.status === 'inSearch') ? true: false : false;
+	var match = Matches.findOne({
+		$or: [
+			{'team1.members': "Maxpain177"},
+			{'team2.members': "Maxpain177"}
+		],
+		$or: [
+			{status: 'inGame'},
+			{status: 'inSearch'}
+		]
+	});
+	return match ? (match.status !== 'finished') ? match.status : false : false;
 });
 
 Handlebars.registerHelper('matchId', function(username) {
-	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
+	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	return match ? match._id : false;
 });
 
 Handlebars.registerHelper('myMatchId', function() {
 	var username = Meteor.user().profile.name;
-	var match = Matches.findOne({'team1.members': username}) ? Matches.findOne({'team1.members': username}) : Matches.findOne({'team2.members': username});
+	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	return match ? match._id : false;
 });
 
 Handlebars.registerHelper('matchStatusInSearch', function(username) {
-	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	var status = match ? match.status : false;
 	return (status === 'inSearch') ? status : false;
 });
 
 Handlebars.registerHelper('matchStatusInGame', function(username) {
-	var match = Matches.findOne({membersTeam1: username}) ? Matches.findOne({membersTeam1: username}) : Matches.findOne({membersTeam2: username});
+	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
 	var status = match ? match.status : false;
 	return (status === 'inGame') ? status : false;
 });
