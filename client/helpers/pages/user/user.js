@@ -15,8 +15,7 @@ Template.user.events({
 		var target = e.currentTarget;
 		if(!target) return;
 		if(target.hasAttribute("data-id")) {
-			var username = target.getAttribute("data-id");
-			Meteor.call('addFriend', username, function(error, result) {
+			Meteor.call('addFriend', target.getAttribute("data-id"), function(error, result) {
 				if(error) {
 					alert(error);
 				}
