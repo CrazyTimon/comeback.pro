@@ -14,6 +14,7 @@
     "font-awesome": {},
     "connection-banner": {},
     "fast-render": {},
-    "server-eval": {}
+    "server-eval": {},
+    "mongo-counter": {}
   }
 }

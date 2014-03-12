@@ -16,7 +16,8 @@
       "font-awesome": {},
       "connection-banner": {},
       "fast-render": {},
-      "server-eval": {}
+      "server-eval": {},
+      "mongo-counter": {}
     },
     "packages": {
       "npm": {
@@ -93,6 +94,11 @@
         "git": "https://github.com/gandev-de/meteor-server-eval.git",
         "tag": "v0.4.1",
         "commit": "4b9eb658ae02ad34fd4b525852bac9be90938744"
+      },
+      "mongo-counter": {
+        "git": "https://github.com/awwx/meteor-mongo-counter.git",
+        "tag": "v1.1.0",
+        "commit": "9a0710543cec7c192e38d5acc54cf3b0a9fbcb20"
       },
       "nprogress": {
         "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",

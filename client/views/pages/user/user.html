@@ -1,88 +1,82 @@
 <template name="user">
-	{{#if currentUser}}
-		<div class="container">
-			<div class="page-header">
-					<h1>
-						{{#if team profile.name 'byUserName'}}
-							{{team.name profile.name 'byUserName'}} | 
-						{{/if}}
-						{{profile.name}} 
-						<small>{{profile.firstname}} {{profile.lastname}}</small>
-					</h1>
-			</div>
-			<div class="well">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="thumbnail center">
-							<img src="{{services.steam.avatar.full}}">
-							<div class="caption">
-								<div class="btn-group">
-									{{#if $neq profile.name currentUser.profile.name}}
-										<button id="#pm" class="btn btn-primary" title="Отправить сообщение"><span class="glyphicon glyphicon-envelope"></span> Сообщение</button>
-										{{#if isMyFriend profile.name}}
-											<button id="deleteFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Удалить из списка друзей"><span class="glyphicon glyphicon-remove"></span></button>	
+	<div class="container">
+		<div class="page-header">
+				<h1>
+					{{#if team profile.name 'byUserName'}}
+						{{#with team profile.name 'byUserName'}}
+							{{name}} | 
+						{{/with}}
+					{{/if}}
+					{{profile.name}} 
+					<small>{{profile.firstname}} {{profile.lastname}}</small>
+				</h1>
+		</div>
+		<div class="well">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="thumbnail center">
+						<img src="{{services.steam.avatar.full}}">
+						<div class="caption">
+							<div class="btn-group">
+								{{#if $neq profile.name currentUser.profile.name}}
+									<button id="#pm" class="btn btn-primary" title="Отправить сообщение"><span class="glyphicon glyphicon-envelope"></span> Сообщение</button>
+									{{#if isMyFriend profile.name}}
+										<button id="deleteFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Удалить из списка друзей"><span class="glyphicon glyphicon-remove"></span></button>	
+									{{else}}
+										{{#if isRequesterFriend profile.name}}
+											<button id="acceptRequestFriend" class="btn btn-info" data-id="{{profile.name}}" title="Подтвердить заявку в друзья"><span class="glyphicon glyphicon-ok"></span></button>
+											<button id="declineRequestFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Отклонить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
 										{{else}}
-											{{#if isRequesterFriend profile.name}}
-												<button id="acceptRequestFriend" class="btn btn-info" data-id="{{profile.name}}" title="Подтвердить заявку в друзья"><span class="glyphicon glyphicon-ok"></span></button>
-												<button id="declineRequestFriend" class="btn btn-danger" data-id="{{profile.name}}" title="Отклонить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
+											{{#if isAccepterFriend profile.name}}
+												<button id="abortRequestFriend" class="btn btn-warning" data-id="{{profile.name}}" title="Отменить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
 											{{else}}
-												{{#if isAccepterFriend profile.name}}
-													<button id="abortRequestFriend" class="btn btn-warning" data-id="{{profile.name}}" title="Отменить заявку в друзья"><span class="glyphicon glyphicon-remove"></span></button>
-												{{else}}
-													<button id="addFriend" class="btn btn-success" data-id="{{profile.name}}" title="Добавить пользователя в список друзей"><span class="glyphicon glyphicon-plus-sign"></span> В друзья</button>
-												{{/if}}
+												<button id="addFriend" class="btn btn-success" data-id="{{profile.name}}" title="Добавить пользователя в список друзей"><span class="glyphicon glyphicon-plus-sign"></span> В друзья</button>
 											{{/if}}
 										{{/if}}
 									{{/if}}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-9">
-					<div class="row">
-						<div class="col-md-6">
-						<div class="text-left">
-							<h3>Общая информация</h3>
-							<p>Город: <strong>{{profile.city}}</strong></p>
-							<p>Дата рождения: <strong>{{profile.birthday}}</strong></p>
-							<p>Дата регистрации: <strong>{{profile.regDate}}</strong></p>
-							<p>Email: <strong>{{#each emails}}{{address}}{{/each}}</strong></p>
-							<p>Steam: <strong>{{profile.contacts.steam}}</strong></p>
-							<p>Skype: <strong>{{profile.contacts.skype}}</strong></p>
-							<p>VK: <strong>{{profile.contacts.vk}}</strong></p>
-						</div>
-						</div>
-						<div class="col-md-6">
-							<div class="text-left">
-								<h3>Статистика</h3>
-								<p>Место: <strong>{{profile.place}}</strong></p>
-								<p>Уровень: <strong>{{profile.skill}}</strong></p>
-								<p>Матчи: 
-									<strong>
-										<span class="text-success">{{profile.matchesWin}}</span>
-										 / 
-										<span>{{profile.matchesPlayed}}</span> (кооф. {{profile.ratioKD}})
-									</strong>
-								</p>
-								<p>Фраги: 
-									<strong>
-										<span class="text-success">{{profile.frags}}</span>
-										 / 
-										<span class="text-danger">{{profile.deaths}}</span> (кооф. {{profile.ratioKD}})
-									</strong>
-								</p>
+								{{/if}}
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="col-sm-9">
+				<div class="row">
+					<div class="col-md-6">
+					<div class="text-left">
+						<h3>Общая информация</h3>
+						<p>Город: <strong>{{profile.city}}</strong></p>
+						<p>Дата рождения: <strong>{{profile.birthday}}</strong></p>
+						<p>Дата регистрации: <strong>{{profile.regDate}}</strong></p>
+						<p>Email: <strong>{{#each emails}}{{address}}{{/each}}</strong></p>
+						<p>Steam: <strong>{{profile.contacts.steam}}</strong></p>
+						<p>Skype: <strong>{{profile.contacts.skype}}</strong></p>
+						<p>VK: <strong>{{profile.contacts.vk}}</strong></p>
+					</div>
+					</div>
+					<div class="col-md-6">
+						<div class="text-left">
+							<h3>Статистика</h3>
+							<p>Место: <strong>{{profile.place}}</strong></p>
+							<p>Уровень: <strong>{{profile.skill}}</strong></p>
+							<p>Матчи: 
+								<strong>
+									<span class="text-success">{{profile.matchesWin}}</span>
+									 / 
+									<span>{{profile.matchesPlayed}}</span> (кооф. {{profile.ratioKD}})
+								</strong>
+							</p>
+							<p>Фраги: 
+								<strong>
+									<span class="text-success">{{profile.frags}}</span>
+									 / 
+									<span class="text-danger">{{profile.deaths}}</span> (кооф. {{profile.ratioKD}})
+								</strong>
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
+			</div>
 		</div>
-	{{else}}
-		{{#if loggingIn}}
-			{{> loading}}
-		{{else}}
-			{{> unAuthorized}}
-		{{/if}}
-	{{/if}}
+	</div>
 </template>
