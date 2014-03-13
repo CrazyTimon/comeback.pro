@@ -90,7 +90,11 @@
 			{{#if teamMatches name}}
 				<span class="text-success">
 					{{#with teamMatchesWin name}}
-						{{length}}
+						{{#if length}}
+							{{length}}
+						{{else}}
+							0
+						{{/if}}
 					{{/with}}
 				</span>
 				 / 
