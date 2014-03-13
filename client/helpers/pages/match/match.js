@@ -1,13 +1,13 @@
 Handlebars.registerHelper('teamMatchesWin', function(teamname) {
-	return Matches.find({'winTeam.members': teamname}).fetch();
+	return Matches.find({'winTeam.name': teamname}).fetch();
 });
 
 Handlebars.registerHelper('teamMatchesLose', function(teamname) {
-	return Matches.find({'loseTeam.members': teamname}).fetch();
+	return Matches.find({'loseTeam.name': teamname}).fetch();
 });
 
 Handlebars.registerHelper('teamMatches', function(teamname) {
-	return Matches.find({$or: [{'winTeam.members': teamname}, {'loseTeam.members': teamname}]}).fetch();
+	return Matches.find({$or: [{'winTeam.name': teamname}, {'loseTeam.name': teamname}]}).fetch();
 });
 
 Handlebars.registerHelper('userMatchesWin', function(username) {
