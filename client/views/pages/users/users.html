@@ -104,9 +104,9 @@
 		</td>
 		<td>
 			{{#if userMarches profile.name}}
-				<span class="text-success" title="Число побед">{{#with userMatchesWin profile.username}} -{{length}} {{/with}}</span>
+				<span class="text-success" title="Число побед">{{userMatchesWin.length profile.username}}</span>
 				 / 
-				<span title="Общее число игр">{{userMatches.count profile.username}}</span>
+				<span title="Общее число игр">{{userMatches.length profile.username}}</span>
 			{{else}}
 				-
 			{{/if}}

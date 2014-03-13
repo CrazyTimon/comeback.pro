@@ -88,7 +88,7 @@
 		<td>{{members.length}}</td>
 		<td>
 			{{#if teamMatches name}}
-				<span class="text-success">{{teamMatchesWin.length name}}</span> / <span>{{teamMatches.length name}}</span>
+				<span class="text-success">{{#with teamMatchesWin name}} {{count}} = {{length}}{{/with}}</span> / <span>{{teamMatches.length name}}</span>
 			{{else}}
 				<span class="text-muted">Нет сыгранных CW</span>
 			{{/if}}
