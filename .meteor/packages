@@ -28,3 +28,4 @@ connection-banner
 fast-render
 server-eval
 mongo-counter
+moment

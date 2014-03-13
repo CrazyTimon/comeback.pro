@@ -17,7 +17,8 @@
       "connection-banner": {},
       "fast-render": {},
       "server-eval": {},
-      "mongo-counter": {}
+      "mongo-counter": {},
+      "moment": {}
     },
     "packages": {
       "npm": {
@@ -99,6 +100,11 @@
         "git": "https://github.com/awwx/meteor-mongo-counter.git",
         "tag": "v1.1.0",
         "commit": "9a0710543cec7c192e38d5acc54cf3b0a9fbcb20"
+      },
+      "moment": {
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.5.1",
+        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
       },
       "nprogress": {
         "git": "https://github.com/zhouzhuojie/meteor-nprogress.git",
