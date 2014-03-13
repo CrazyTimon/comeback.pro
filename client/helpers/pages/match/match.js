@@ -1,3 +1,27 @@
+Handlebars.registerHelper('teamMatchesWin', function(teamname) {
+	return Matches.find({'winTeam.members': teamname}).fetch();
+});
+
+Handlebars.registerHelper('teamMatchesLose', function(teamname) {
+	return Matches.find({'loseTeam.members': teamname}).fetch();
+});
+
+Handlebars.registerHelper('teamMatches', function(teamname) {
+	return Matches.find({$or: [{'winTeam.members': teamname}, {'loseTeam.members': teamname}]}).fetch();
+});
+
+Handlebars.registerHelper('userMatchesWin', function(username) {
+	return Matches.find({'winTeam.members': username}).fetch();
+});
+
+Handlebars.registerHelper('userMatchesLose', function(username) {
+	return Matches.find({'loseTeam.members': username}).fetch();
+});
+
+Handlebars.registerHelper('userMatches', function(username) {
+	return Matches.find({$or: [{'winTeam.members': username}, {'loseTeam.members': username}]}).fetch();
+});
+
 Handlebars.registerHelper('getGameStatus', function(status) {
 	switch (status) {
 		case 'warmup':

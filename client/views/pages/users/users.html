@@ -103,10 +103,22 @@
 			{{/if}}
 		</td>
 		<td>
-			<span class="text-success" title="Число побед">{{profile.matchesWin}}</span> / <span title="Общее число игр">{{profile.matchesPlayed}}</span>
+			{{#if userMarches profile.name}}
+				<span class="text-success" title="Число побед">{{userMatchesWin.count profile.username}}</span>
+				 / 
+				<span title="Общее число игр">{{userMatches.count profile.username}}</span>
+			{{else}}
+				-
+			{{/if}}
 		</td>
 		<td>
-			<span class="text-success" title="Число убийств">{{profile.frags}}</span> / <span class="text-danger" title="Число смертей">{{profile.deaths}}</span>
+			{{#if profile.frags}}
+				<span class="text-success" title="Число убийств">{{profile.frags}}</span>
+				 / 
+				<span class="text-danger" title="Число смертей">{{profile.deaths}}</span>
+			{{else}}
+				-
+			{{/if}}
 		</td>
 	</tr>
 </template>

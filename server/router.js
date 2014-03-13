@@ -55,9 +55,14 @@ Router.map(function () {
 							});
 							break;
 						case 'gameEnd':
+							var match = Matches.findOne(Request.matchId);
+							var winTeam = (match.team1.score > match.team2.score) ? match.team1 : match.team2;
+							var loseTeam = (match.team1.score < match.team2.score) ? match.team1 : match.team2;
 							Matches.update(Request.matchId, {
 								$set: {
-									'status': 'finished'
+									'status': 'finished',
+									winTeam: winTeam,
+									loseTeam: loseTeam
 								}
 							});
 					}
