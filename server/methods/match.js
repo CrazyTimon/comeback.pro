@@ -8,7 +8,7 @@ Meteor.methods({
 		check(members, Array);
 		if (!inArray(user.profile.name, members)) throw new Meteor.Error('Вы не в списке участников');
 		if ((members.length > 5) || (members.length < 1)) throw new Meteor.Error('Вы выбрали неправильное количество тиммейтов');
-		if (Matches.findOne({'team1._id': team._id}) || Matches.findOne({'team2._id': team._id})) throw new Meteor.Error('Ваша команда уже в другой игре');
+		if (Matches.findOne({$and: [{$or: [{'team1._id': team._id}, {'team2._id': team._id}]}, {$or: [{'status': 'inGame'}, {'status': 'inSearch'}]}]})) throw new Meteor.Error('Ваша команда уже в другой игре');
 		for (var i = 0; i < members.length; i++) {
 			var member = members[i];
 			if (!Teams.findOne({'members.username': member, name: team.name})) {
