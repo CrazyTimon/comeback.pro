@@ -115,20 +115,18 @@ Handlebars.registerHelper('matchStatus', function(username) {
 		]
 	});
 	if (match) {
-		if (match.status !== 'finished') {
-			return match.status;
-		}
+		return match.status;
 	}
 });
 
 Handlebars.registerHelper('matchId', function(username) {
-	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
+	var match = Matches.findOne({$and: [{$or: [{'team1.members': username}, {'team2.members': username}]}, {$or: [{'status': 'inSearch'}, {'status': 'inGame'}]}]});
 	return match ? match._id : false;
 });
 
 Handlebars.registerHelper('myMatchId', function() {
 	var username = Meteor.user().profile.name;
-	var match = Matches.findOne({$or: [{'team1.members': username}, {'team2.members': username}]});
+	var match = Matches.findOne({$and: [{$or: [{'team1.members': username}, {'team2.members': username}]}, {$or: [{'status': 'inSearch'}, {'status': 'inGame'}]}]});
 	return match ? match._id : false;
 });
 
